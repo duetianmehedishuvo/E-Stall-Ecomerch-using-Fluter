@@ -7,9 +7,9 @@ class PaymentService{
 
   static final Firestore db=Firestore.instance;
 
-  static Future addPayment(PaymentModels paymentModels,String date)async{
+  static Future addPayment(PaymentModels paymentModels,String date,String time)async{
 
-    final doc=db.collection(COLLECTION_PAYMENT).document(date).collection(paymentModels.profile.email).document('userPayment');
+    final doc=db.collection(COLLECTION_PAYMENT).document(date).collection(paymentModels.profile.email).document(time).collection('collectionPath').document('userPayment');
     return await doc.setData(paymentModels.toMap());
 
   }

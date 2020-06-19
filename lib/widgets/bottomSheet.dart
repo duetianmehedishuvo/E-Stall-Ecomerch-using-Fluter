@@ -1,11 +1,13 @@
 import 'package:estallecomerch/helpers/authentication_service.dart';
 import 'package:estallecomerch/helpers/cart_service.dart';
+import 'package:estallecomerch/helpers/payment_service.dart';
 import 'package:estallecomerch/models/payment_models.dart';
 import 'package:estallecomerch/models/payment_product_models.dart';
 import 'package:estallecomerch/models/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:toast/toast.dart';
 
 class BottomSheetExample extends StatefulWidget {
 
@@ -24,14 +26,18 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
 
   bool isContainer=true;
   PaymentProductModels paymentProductModels;
-  PaymentModels paymentModels;
+  PaymentModels paymentModelssub;
+  String transitionID='';
+  String paymentSystem='';
+  String formattedDate;
+  String formattedTime;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     paymentProductModels=PaymentProductModels();
-    paymentModels=PaymentModels();
+    paymentModelssub=PaymentModels();
 
     print(widget.paymentModels.price.toString());
     print(widget.profile.name);
@@ -41,12 +47,45 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
   }
 
 
+  _orderSubmit(){
+
+
+    paymentModelssub.profile=widget.profile;
+    paymentModelssub.paymentProductModels=widget._paymentProductModel;
+    paymentModelssub.price=widget.paymentModels.price;
+    paymentModelssub.count=widget.paymentModels.count;
+    paymentModelssub.paymentMethod=paymentSystem;
+    paymentModelssub.transactionNumber=transitionID;
+
+
+    if(isContainer){
+      if(paymentKey.currentState.validate()){
+        paymentKey.currentState.save();
+        PaymentService.addPayment(paymentModelssub, formattedDate,formattedTime).then((_){
+          Toast.show('Payment Successful', context);
+        }).catchError((error){
+          print(error);
+          Toast.show('Error', context);
+        });
+      }
+    }else{
+      PaymentService.addPayment(paymentModelssub, formattedDate,formattedTime).then((_){
+        Toast.show('Payment Successful', context);
+      }).catchError((error){
+        print(error);
+        Toast.show('Error', context);
+      });
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
 
     DateTime now = DateTime.now();
-    String formattedDate = DateFormat('kk:mm:ss EEE d MMM').format(now);
+    formattedDate = DateFormat('EEE d MMM').format(now);
+    formattedTime = DateFormat('kk:mm:ss').format(now);
 
 
     print('${widget._paymentProductModel[0].authName}');
@@ -91,6 +130,7 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                         onPressed: (){
                           setState(() {
                             isContainer=false;
+                            paymentSystem='Cash IN';
                           });
                         },
                       ),
@@ -122,6 +162,7 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
 
                           setState(() {
                             isContainer=true;
+                            paymentSystem='Bkash';
                           });
                         },
                       ),
@@ -133,16 +174,23 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
             Container(
               margin: EdgeInsets.only(top: 10),
               child: isContainer?Form(
+                key: paymentKey,
                 child: TextFormField(
                   decoration: InputDecoration(
                     labelText: 'Enter your bkash Transaction id',
                     border: OutlineInputBorder(),
                   ),
                   validator: (value){
+                    if(value.isEmpty){
+                      return 'This Field is should not be empty';
+                    }
+                    if(value.length<6){
+                      return 'field length should 11 character';
+                    }
                     return null;
                   },
                   onSaved: (value){
-
+                    transitionID=value;
                   },
                 ),
               ):Container(
@@ -165,7 +213,7 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                 child: Text('Finally Order',style: TextStyle(
                   color: Colors.white
                 ),),
-                onPressed: (){},
+                onPressed: _orderSubmit,
               ),
             ),
           ],
