@@ -4,6 +4,7 @@ import 'package:estallecomerch/helpers/payment_service.dart';
 import 'package:estallecomerch/models/payment_models.dart';
 import 'package:estallecomerch/models/payment_product_models.dart';
 import 'package:estallecomerch/models/profile.dart';
+import 'package:estallecomerch/pages/report_pages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -63,6 +64,7 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
         paymentKey.currentState.save();
         PaymentService.addPayment(paymentModelssub, formattedDate,formattedTime).then((_){
           Toast.show('Payment Successful', context);
+          Navigator.of(context).pushReplacementNamed(ReportPages.route,arguments: paymentModelssub);
         }).catchError((error){
           print(error);
           Toast.show('Error', context);
@@ -71,6 +73,7 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
     }else{
       PaymentService.addPayment(paymentModelssub, formattedDate,formattedTime).then((_){
         Toast.show('Payment Successful', context);
+        Navigator.of(context).pushReplacementNamed(ReportPages.route,arguments: paymentModelssub);
       }).catchError((error){
         print(error);
         Toast.show('Error', context);
@@ -233,9 +236,6 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
     AlertDialog alert = AlertDialog(
       title: Text(heading),
       content: Text(message),
-      actions: [
-
-      ],
     );
 
     // show the dialog

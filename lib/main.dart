@@ -2,6 +2,8 @@ import 'package:estallecomerch/helpers/provider/products_provider.dart';
 import 'package:estallecomerch/pages/homeScreen.dart';
 import 'package:estallecomerch/pages/launcher_screen.dart';
 import 'package:estallecomerch/pages/login_page.dart';
+import 'package:estallecomerch/pages/report_pages.dart';
+import 'package:estallecomerch/pages/report_screen.dart';
 import 'package:estallecomerch/pages/sign_up_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -46,6 +48,7 @@ class MyApp extends StatelessWidget {
           LoginPage.route:(context)=>LoginPage(),
           SignUpScreen.route:(context)=>SignUpScreen(),
           HomeScreen.route:(context)=>HomeScreen(),
+          ReportPages.route:(context)=>ReportPages(),
         },
       ),
     );
