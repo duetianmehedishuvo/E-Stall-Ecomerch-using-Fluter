@@ -23,10 +23,10 @@ class _ProductsWidgetsState extends State<ProductsWidgets> {
   int countNumber;
   AuthenticationService authenticationService;
   String email;
-  double productprice;
+  int productprice;
   CartService cartService;
   int cnt;
-  double mainPrice;
+  int mainPrice;
 
   bool isFavourite=false;
 

@@ -10,6 +10,7 @@ import 'package:estallecomerch/pages/homeScreen.dart';
 import 'package:estallecomerch/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:toast/toast.dart';
 
 class ReportPages extends StatefulWidget {
   static final route='/reportScreen';
@@ -98,7 +99,16 @@ class _ReportPagesState extends State<ReportPages> {
                 UserUtils.saveUserSessionToPreference(false);
                 UserUtils.getUserSessionUsingPref().then((value) {
                   print(value.toString());
-                  Navigator.of(context).pushReplacementNamed(HomeScreen.route);
+                  widget.paymentModels.paymentProductModels.forEach((product) {
+                    setState(() {
+                      CartService.addtocartProductDelete(product.keyName, widget.paymentModels.profile.email).then((value){
+                        setState(() {
+                          Toast.show('Thanks For Parching Products', context);
+                          Navigator.of(context).pushReplacementNamed(HomeScreen.route);
+                        });
+                      });
+                    });
+                  });
                 });
               },
             )

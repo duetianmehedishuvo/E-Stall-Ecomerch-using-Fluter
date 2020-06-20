@@ -199,8 +199,8 @@ class _AddProductsScreenState extends State<AddProductsScreen> {
                               return null;
                             },
                             onSaved: (value){
-                              products.current_price=double.parse(value);
-                              productsUserId.current_price=double.parse(value);
+                              products.current_price=int.parse(value);
+                              productsUserId.current_price=int.parse(value);
                             },
                           ),
                           SizedBox(height: 10,),

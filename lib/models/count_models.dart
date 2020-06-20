@@ -1,5 +1,5 @@
 class CountModels{
-  int count;
+  num count;
   double price;
   String email;
   String keyName;

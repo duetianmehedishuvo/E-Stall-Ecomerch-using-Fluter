@@ -29,6 +29,11 @@ class CartService{
     }
   }
 
+  static Future addtocartProductDelete(String nameKey,String email)async{
+    final doc= db.collection(COLLECTION_PRODUCTS_CHOOSE).document(email).collection('Products').document(nameKey);
+    return await doc.delete();
+  }
+
 
 
 }

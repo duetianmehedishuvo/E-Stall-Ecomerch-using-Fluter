@@ -1,8 +1,8 @@
 class Products{
   String imageUrl;
   String nameKey;
-  double current_price;
-  double last_price;
+  num current_price;
+  num last_price;
   String category;
   String description;
   String condition;

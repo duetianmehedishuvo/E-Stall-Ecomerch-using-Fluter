@@ -5,6 +5,7 @@ import 'package:estallecomerch/helpers/provider/products_provider.dart';
 import 'package:estallecomerch/models/choose_products_models.dart';
 import 'package:estallecomerch/models/products_models.dart';
 import 'package:estallecomerch/models/products_models_user.dart';
+import 'package:estallecomerch/pages/homeScreen.dart';
 import 'package:estallecomerch/pages/my_order_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,10 +26,10 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   int countNumber;
   AuthenticationService authenticationService;
   String email;
-  double productprice;
+  int productprice;
   CartService cartService;
   int cnt;
-  double mainPrice;
+  int mainPrice;
 
   bool isFavourite=false;
 

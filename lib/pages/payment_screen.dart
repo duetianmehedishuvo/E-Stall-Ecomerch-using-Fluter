@@ -53,14 +53,16 @@ class _PaymentScreenState extends State<PaymentScreen> {
           setState(() {
             productslist.forEach((products) {
               paymentProductModels=PaymentProductModels();
-              paymentProductModels.name=products.name;
-              paymentProductModels.count=products.count;
-              paymentProductModels.current_price=products.current_price;
-              paymentProductModels.price=products.totalPrice;
-              paymentProductModels.keyName=products.nameKey;
-              paymentProductModels.authName=products.authorName;
-              print(products.name);
-              _paymentProductModel.add(paymentProductModels);
+              setState(() {
+                paymentProductModels.name=products.name;
+                paymentProductModels.count=products.count;
+                paymentProductModels.current_price=products.current_price;
+                paymentProductModels.price=products.totalPrice;
+                paymentProductModels.keyName=products.nameKey;
+                paymentProductModels.authName=products.authorName;
+                print(products.name);
+                _paymentProductModel.add(paymentProductModels);
+              });
             });
           });
         });

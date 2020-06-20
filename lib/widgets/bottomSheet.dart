@@ -90,14 +90,8 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
     formattedDate = DateFormat('EEE d MMM').format(now);
     formattedTime = DateFormat('kk:mm:ss').format(now);
 
-
-    print('${widget._paymentProductModel[0].authName}');
-    print('${widget._paymentProductModel[1].authName}');
-    print('${widget._paymentProductModel[2].authName}');
-    print('${widget._paymentProductModel[3].authName}');
-    print('${widget._paymentProductModel.length.toString()}');
-
     return Container(
+      width: 500,
       color: Color(0xff757575),
       child: Container(
         padding: EdgeInsets.all(20.0),

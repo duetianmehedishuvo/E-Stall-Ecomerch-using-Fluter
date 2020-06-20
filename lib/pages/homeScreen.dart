@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:deivao_drawer/deivao_drawer.dart';
 import 'package:deivao_drawer/drawer_controller.dart';
 import 'package:estallecomerch/helpers/authentication_service.dart';
+import 'package:estallecomerch/helpers/cart_service.dart';
 import 'package:estallecomerch/helpers/products_db_service.dart';
 import 'package:estallecomerch/helpers/provider/products_provider.dart';
 import 'package:estallecomerch/helpers/user_utils.dart';
@@ -102,6 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 if(value==false){
                   productsUserId.count=0;
                   productsUserId.favouriteCheck=false;
+                  CartService.addtocartProductDelete(products.nameKey, email);
                   ProductsDBService.addProductWithUSER(productsUserId,email);
                   ProductsDBService.addProductBYCategoryWithUser(productsUserId, email);
                   ProductsDBService.addProductByAuthorWithUser(productsUserId, email);

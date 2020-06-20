@@ -2,6 +2,7 @@ import 'package:estallecomerch/helpers/authentication_service.dart';
 import 'package:estallecomerch/helpers/cart_service.dart';
 import 'package:estallecomerch/helpers/provider/products_provider.dart';
 import 'package:estallecomerch/models/choose_products_models.dart';
+import 'package:estallecomerch/pages/payment_screen.dart';
 import 'package:estallecomerch/widgets/choose_products_widgets.dart';
 import 'package:estallecomerch/widgets/products_widgets.dart';
 import 'package:flutter/material.dart';
@@ -70,7 +71,15 @@ class _MyOrderPageState extends State<MyOrderPage> {
               children: <Widget>[
                 IconButton(
                   icon: Icon(Icons.shopping_cart,color: Colors.white,),
-                  onPressed: (){},
+                  onPressed: (){
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context)=>PaymentScreen()
+                    )).then((_){
+                      setState(() {
+
+                      });
+                    });
+                  },
                 ),
                 Positioned(
                   right: 10,
@@ -126,7 +135,13 @@ class _MyOrderPageState extends State<MyOrderPage> {
                   height: 70,
                   color: Colors.cyan,
                   child: FlatButton.icon(onPressed: (){
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context)=>PaymentScreen()
+                    )).then((_){
+                      setState(() {
 
+                      });
+                    });
                   }, icon: Icon(Icons.card_travel,color: Colors.white.withOpacity(.5),),
                       label: Consumer<ProductsProvider>(
                         builder: (context,data,child){

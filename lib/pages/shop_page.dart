@@ -20,11 +20,18 @@ class _ShopPageState extends State<ShopPage> {
             icon: Icon(Icons.search,color: Colors.white,),
             onPressed: (){
               showSearch(context: context, delegate: ShopSearch()).then((value){
+
                 setState(() {
-                  print(value);
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context)=>ShopProductsList(value)
-                  ));
+                  if(value=='left'){
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context)=>ShopPage()
+                    ));
+                  }else{
+                    print(value);
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context)=>ShopProductsList(value)
+                    ));
+                  }
                 });
               });
             },
@@ -86,7 +93,7 @@ class ShopSearch extends SearchDelegate{
     return IconButton(
       icon: Icon(Icons.arrow_left),
       onPressed: (){
-        close(context, null);
+        close(context, 'left');
       },
     );
   }

@@ -1,16 +1,16 @@
 class ProductsUserId{
   String imageUrl;
   String nameKey;
-  double current_price;
-  double last_price;
+  num current_price;
+  num last_price;
   String category;
   String description;
   String condition;
   String name;
   String quantity;
   String authorName;
-  int count;
-  double price;
+  num count;
+  num price;
   bool favouriteCheck;
 
   ProductsUserId({
