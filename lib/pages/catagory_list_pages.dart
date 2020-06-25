@@ -38,34 +38,34 @@ class _CategoryListPagesState extends State<CategoryListPages> {
                     child: Stack(
                       overflow: Overflow.visible,
                       children: <Widget>[
-                        Image.asset('images/Grocery Final R.jpg',
+                        Image.asset('images/grocery.jpg',
                           width: double.infinity,
                           height: double.infinity,
                           fit: BoxFit.cover,
                         ),
-                        Container(
-                          width: double.infinity,
-                          height: double.infinity,
-                          color: Colors.blue.withOpacity(.3),
-                        ),
-                        Positioned(
-                          right: 5,
-                          bottom: 5,
-                          left: 5,
-                          child: Container(
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(.5),
-                                borderRadius: BorderRadius.circular(10)
-                            ),
-                            child: Text('Groceries',style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                            ),),
-                          ),
-                        )
+//                        Container(
+//                          width: double.infinity,
+//                          height: double.infinity,
+//                          color: Colors.blue.withOpacity(.3),
+//                        ),
+//                        Positioned(
+//                          right: 5,
+//                          bottom: 5,
+//                          left: 5,
+//                          child: Container(
+//                            alignment: Alignment.center,
+//                            padding: EdgeInsets.all(8),
+//                            decoration: BoxDecoration(
+//                                color: Colors.black.withOpacity(.5),
+//                                borderRadius: BorderRadius.circular(10)
+//                            ),
+//                            child: Text('Groceries',style: TextStyle(
+//                              fontSize: 20,
+//                              color: Colors.white,
+//                              fontWeight: FontWeight.w500,
+//                            ),),
+//                          ),
+//                        )
                       ],
                     ),
                   ),
@@ -84,34 +84,34 @@ class _CategoryListPagesState extends State<CategoryListPages> {
                     child: Stack(
                       overflow: Overflow.visible,
                       children: <Widget>[
-                        Image.asset('images/Drinks R.jpg',
+                        Image.asset('images/grocery (2).jpg',
                           width: double.infinity,
                           height: double.infinity,
                           fit: BoxFit.cover,
                         ),
-                        Container(
-                          width: double.infinity,
-                          height: double.infinity,
-                          color: Colors.blue.withOpacity(.3),
-                        ),
-                        Positioned(
-                          right: 5,
-                          bottom: 5,
-                          left: 5,
-                          child: Container(
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(.5),
-                                borderRadius: BorderRadius.circular(10)
-                            ),
-                            child: Text('Drink & Desert',style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                            ),),
-                          ),
-                        )
+//                        Container(
+//                          width: double.infinity,
+//                          height: double.infinity,
+//                          color: Colors.blue.withOpacity(.3),
+//                        ),
+//                        Positioned(
+//                          right: 5,
+//                          bottom: 5,
+//                          left: 5,
+//                          child: Container(
+//                            alignment: Alignment.center,
+//                            padding: EdgeInsets.all(8),
+//                            decoration: BoxDecoration(
+//                                color: Colors.black.withOpacity(.5),
+//                                borderRadius: BorderRadius.circular(10)
+//                            ),
+//                            child: Text('Drink & Desert',style: TextStyle(
+//                              fontSize: 20,
+//                              color: Colors.white,
+//                              fontWeight: FontWeight.w500,
+//                            ),),
+//                          ),
+//                        )
                       ],
                     ),
                   ),

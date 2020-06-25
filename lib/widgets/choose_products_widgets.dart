@@ -180,6 +180,8 @@ class _ChooseProductWidgetState extends State<ChooseProductWidget> {
       productsUserId.name=widget.chooseProductModels.name;
       productsUserId.nameKey=widget.chooseProductModels.nameKey;
       productsUserId.imageUrl=widget.chooseProductModels.imageUrl;
+      productsUserId.imageUrl2=widget.chooseProductModels.imageUrl2;
+      productsUserId.imageUrl3=widget.chooseProductModels.imageUrl3;
       productsUserId.current_price=widget.chooseProductModels.current_price;
       productsUserId.last_price=widget.chooseProductModels.last_price;
       productsUserId.category=widget.chooseProductModels.category;

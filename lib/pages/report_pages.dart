@@ -1,13 +1,14 @@
 import 'package:estallecomerch/helpers/authentication_service.dart';
 import 'package:estallecomerch/helpers/cart_service.dart';
+import 'package:estallecomerch/helpers/products_db_service.dart';
 import 'package:estallecomerch/helpers/provider/products_provider.dart';
 import 'package:estallecomerch/helpers/user_utils.dart';
 import 'package:estallecomerch/models/choose_products_models.dart';
 import 'package:estallecomerch/models/payment_models.dart';
 import 'package:estallecomerch/models/payment_product_models.dart';
+import 'package:estallecomerch/models/products_models_user.dart';
 import 'package:estallecomerch/models/profile.dart';
 import 'package:estallecomerch/pages/homeScreen.dart';
-import 'package:estallecomerch/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
@@ -29,6 +30,7 @@ class _ReportPagesState extends State<ReportPages> {
   AuthenticationService authenticationService;
   String email1='';
   Profile profile1;
+  ProductsUserId productsUserId;
 
 
   PaymentProductModels paymentProductModels;
@@ -39,6 +41,7 @@ class _ReportPagesState extends State<ReportPages> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    productsUserId=ProductsUserId();
     authenticationService=AuthenticationService();
     paymentProductModels=PaymentProductModels();
     profile1=Profile();
@@ -46,6 +49,10 @@ class _ReportPagesState extends State<ReportPages> {
     AuthenticationService.getUserPhoneNumberByPreference().then((email){
       email1=email;
       setState(() {
+
+        Provider.of<ProductsProvider>(context,listen: false).getCount(email);
+        Provider.of<ProductsProvider>(context,listen: false).getTotalprice(email);
+
         authenticationService.getUserProfileByEmail(email).then((profile){
           setState(() {
             profile1=profile;
@@ -72,18 +79,71 @@ class _ReportPagesState extends State<ReportPages> {
     });
   }
 
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-    widget.paymentModels=ModalRoute.of(context).settings.arguments;
+  _clearProduct(){
+
+    UserUtils.saveUserSessionToPreference(false);
+    UserUtils.getUserSessionUsingPref().then((value) {
+      print(value.toString());
+      widget.paymentModels.paymentProductModels.forEach((product) {
+        setState(() {
+          CartService.addtocartProductDelete(product.keyName, widget.paymentModels.profile.email).then((value){
+            setState(() {
+
+              ProductsDBService.getAllProducts().then((listOfProducts){
+                listOfProducts.forEach((products) {
+                  print('Delete  Method Call');
+                  productsUserId.name=products.name;
+                  productsUserId.nameKey=products.nameKey;
+                  productsUserId.current_price=products.current_price;
+                  productsUserId.last_price=products.last_price;
+                  productsUserId.authorName=products.authorName;
+                  productsUserId.imageUrl=products.imageUrl;
+                  productsUserId.imageUrl2=products.imageUrl2;
+                  productsUserId.imageUrl3=products.imageUrl3;
+                  productsUserId.category=products.category;
+                  productsUserId.description=products.description;
+                  productsUserId.condition=products.condition;
+                  productsUserId.quantity=products.quantity;
+
+                  productsUserId.count=0;
+                  productsUserId.favouriteCheck=false;
+
+                  ProductsDBService.addProductWithUSER(productsUserId,widget.paymentModels.profile.email);
+                  ProductsDBService.addProductBYCategoryWithUser(productsUserId, widget.paymentModels.profile.email);
+                  ProductsDBService.addProductByAuthorWithUser(productsUserId, widget.paymentModels.profile.email);
+
+                });
+              });
+
+              Provider.of<ProductsProvider>(context,listen: false).getCount(widget.paymentModels.profile.email);
+              Provider.of<ProductsProvider>(context,listen: false).getTotalprice(widget.paymentModels.profile.email);
+              Toast.show('Thanks For Parching Products', context);
+              Navigator.of(context).pushReplacementNamed(HomeScreen.route);
+            });
+          });
+        });
+      });
+    });
+
 
 
 
   }
 
   @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    widget.paymentModels=ModalRoute.of(context).settings.arguments;
+
+  }
+
+  @override
   Widget build(BuildContext context) {
+
+    Provider.of<ProductsProvider>(context,listen: false).count;
+    Provider.of<ProductsProvider>(context,listen: false).totalPrice;
+
     return WillPopScope(
       onWillPop: (){
         UserUtils.saveUserSessionToPreference(false);
@@ -96,20 +156,7 @@ class _ReportPagesState extends State<ReportPages> {
             IconButton(
               icon: Icon(Icons.home,color: Colors.white,),
               onPressed: (){
-                UserUtils.saveUserSessionToPreference(false);
-                UserUtils.getUserSessionUsingPref().then((value) {
-                  print(value.toString());
-                  widget.paymentModels.paymentProductModels.forEach((product) {
-                    setState(() {
-                      CartService.addtocartProductDelete(product.keyName, widget.paymentModels.profile.email).then((value){
-                        setState(() {
-                          Toast.show('Thanks For Parching Products', context);
-                          Navigator.of(context).pushReplacementNamed(HomeScreen.route);
-                        });
-                      });
-                    });
-                  });
-                });
+                _clearProduct();
               },
             )
           ],
@@ -121,7 +168,6 @@ class _ReportPagesState extends State<ReportPages> {
               color: Colors.blue.withOpacity(.2),
               child: Column(
                 children: <Widget>[
-
                   Center(
                     child: FutureBuilder(
                       future: authenticationService.getUserProfileByEmail(email1),

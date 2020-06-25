@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class ProductScreen extends StatefulWidget {
+  static final route='/productScreen';
   @override
   _ProductScreenState createState() => _ProductScreenState();
 }

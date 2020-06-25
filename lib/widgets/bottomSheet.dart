@@ -1,9 +1,11 @@
-import 'package:estallecomerch/helpers/authentication_service.dart';
+
 import 'package:estallecomerch/helpers/cart_service.dart';
 import 'package:estallecomerch/helpers/payment_service.dart';
+import 'package:estallecomerch/models/payment_get_email.dart';
 import 'package:estallecomerch/models/payment_models.dart';
 import 'package:estallecomerch/models/payment_product_models.dart';
 import 'package:estallecomerch/models/profile.dart';
+import 'package:estallecomerch/models/shop_models.dart';
 import 'package:estallecomerch/pages/report_pages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +29,9 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
 
   bool isContainer=true;
   PaymentProductModels paymentProductModels;
+  PaymentGetEmail paymentGetEmail;
+  ShopModels shopModels;
+
   PaymentModels paymentModelssub;
   String transitionID='';
   String paymentSystem='';
@@ -39,17 +44,19 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
     super.initState();
     paymentProductModels=PaymentProductModels();
     paymentModelssub=PaymentModels();
+    paymentGetEmail=PaymentGetEmail();
+    shopModels=ShopModels();
 
     print(widget.paymentModels.price.toString());
     print(widget.profile.name);
     print(widget.profile.phoneNumber);
     print(widget.profile.address);
     print(widget.profile.email);
+
   }
 
 
   _orderSubmit(){
-
 
     paymentModelssub.profile=widget.profile;
     paymentModelssub.paymentProductModels=widget._paymentProductModel;
@@ -58,10 +65,27 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
     paymentModelssub.paymentMethod=paymentSystem;
     paymentModelssub.transactionNumber=transitionID;
 
+    paymentGetEmail.email=widget.profile.email;
+    paymentGetEmail.date=formattedTime;
+
+
+
 
     if(isContainer){
       if(paymentKey.currentState.validate()){
         paymentKey.currentState.save();
+        PaymentService.addPaymentEmail(paymentGetEmail, formattedDate);
+        PaymentService.addPaymentTime(paymentGetEmail, formattedDate);
+        PaymentService.addPaymentShopName(paymentModelssub, formattedDate,formattedTime);
+
+        widget._paymentProductModel.forEach((paymentProduct) {
+          setState(() {
+            shopModels.name=paymentProduct.authName;
+            CartService.addShopNameForPayment(paymentProduct, formattedDate, widget.profile.email, formattedTime);
+            CartService.addShopName(shopModels, formattedDate);
+          });
+        });
+
         PaymentService.addPayment(paymentModelssub, formattedDate,formattedTime).then((_){
           Toast.show('Payment Successful', context);
           Navigator.of(context).pushReplacementNamed(ReportPages.route,arguments: paymentModelssub);
@@ -71,6 +95,21 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
         });
       }
     }else{
+
+      PaymentService.addPaymentEmail(paymentGetEmail, formattedDate);
+      PaymentService.addPaymentTime(paymentGetEmail, formattedDate);
+
+
+      PaymentService.addPaymentShopName(paymentModelssub, formattedDate,formattedTime);
+
+      widget._paymentProductModel.forEach((paymentProduct) {
+        setState(() {
+          shopModels.name=paymentProduct.authName;
+          CartService.addShopNameForPayment(paymentProduct, formattedDate, widget.profile.email, formattedTime);
+          CartService.addShopName(shopModels, formattedDate);
+        });
+      });
+
       PaymentService.addPayment(paymentModelssub, formattedDate,formattedTime).then((_){
         Toast.show('Payment Successful', context);
         Navigator.of(context).pushReplacementNamed(ReportPages.route,arguments: paymentModelssub);
@@ -88,7 +127,7 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
 
     DateTime now = DateTime.now();
     formattedDate = DateFormat('EEE d MMM').format(now);
-    formattedTime = DateFormat('kk:mm:ss').format(now);
+    formattedTime = DateFormat('hh:mm:ss a').format(now);
 
     return Container(
       width: 500,
@@ -218,9 +257,6 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
       ),
     );
   }
-
-
-
 
 
   ////// Alert Dialog Code

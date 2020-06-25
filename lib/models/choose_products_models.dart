@@ -1,8 +1,9 @@
-import 'package:estallecomerch/models/products_models.dart';
 
 class ChooseProductModels{
 
   String imageUrl;
+  String imageUrl2;
+  String imageUrl3;
   String nameKey;
   num current_price;
   num last_price;
@@ -17,6 +18,8 @@ class ChooseProductModels{
 
   ChooseProductModels({
     this.imageUrl,
+    this.imageUrl2,
+    this.imageUrl3,
     this.current_price,
     this.last_price,
     this.category,
@@ -40,6 +43,8 @@ class ChooseProductModels{
     var map=<String,dynamic>{
       'name':name,
       'imageUrl':imageUrl,
+      'imageUrl2':imageUrl2,
+      'imageUrl3':imageUrl3,
       'Current_price':current_price,
       'last_price':last_price,
       'category':category,
@@ -58,6 +63,8 @@ class ChooseProductModels{
   ChooseProductModels.fromMap(Map<String,dynamic> map){
     name=map['name'];
     imageUrl=map['imageUrl'];
+    imageUrl2=map['imageUrl2'];
+    imageUrl3=map['imageUrl3'];
     current_price=map['Current_price'];
     last_price=map['last_price'];
     category=map['category'];

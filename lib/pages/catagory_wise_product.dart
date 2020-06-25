@@ -1,6 +1,5 @@
 import 'package:estallecomerch/helpers/authentication_service.dart';
 import 'package:estallecomerch/helpers/products_db_service.dart';
-import 'package:estallecomerch/models/products_models.dart';
 import 'package:estallecomerch/models/products_models_user.dart';
 import 'package:estallecomerch/pages/my_order_page.dart';
 import 'package:estallecomerch/widgets/products_widgets.dart';

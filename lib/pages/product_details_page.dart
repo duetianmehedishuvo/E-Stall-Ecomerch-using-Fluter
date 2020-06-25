@@ -1,11 +1,10 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:estallecomerch/helpers/authentication_service.dart';
 import 'package:estallecomerch/helpers/cart_service.dart';
 import 'package:estallecomerch/helpers/products_db_service.dart';
 import 'package:estallecomerch/helpers/provider/products_provider.dart';
 import 'package:estallecomerch/models/choose_products_models.dart';
-import 'package:estallecomerch/models/products_models.dart';
 import 'package:estallecomerch/models/products_models_user.dart';
-import 'package:estallecomerch/pages/homeScreen.dart';
 import 'package:estallecomerch/pages/my_order_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -30,10 +29,15 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   CartService cartService;
   int cnt;
   int mainPrice;
+  List<String>  imageUrl=[];
+  String imageurl1;
+  String imageurl2;
+  String imageurl3;
 
   bool isFavourite=false;
 
   ChooseProductModels chooseProductModels=ChooseProductModels();
+
 
 
   @override
@@ -45,6 +49,15 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     AuthenticationService.getUserPhoneNumberByPreference().then((getEmail){
       setState(() {
         email=getEmail;
+
+        imageurl1=widget.products.imageUrl;
+        imageurl2=widget.products.imageUrl2.isEmpty?widget.products.imageUrl:widget.products.imageUrl2;
+        imageurl3=widget.products.imageUrl3.isEmpty?widget.products.imageUrl:widget.products.imageUrl3;
+
+        imageUrl.add(imageurl1);
+        imageUrl.add(imageurl2);
+        imageUrl.add(imageurl3);
+
       });
     });
 
@@ -52,6 +65,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     productprice=widget.products.price;
     mainPrice=countNumber*widget.products.current_price;
   }
+
 
   @override
   void dispose() {
@@ -63,6 +77,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
+
+
+
     return WillPopScope(
       onWillPop: (){
         Navigator.of(context).pop();
@@ -82,7 +99,53 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     color: Colors.blue.withOpacity(.1),
                     child: Stack(
                       children: <Widget>[
-                        Image.network(widget.products.imageUrl,width: double.infinity,height: 200,fit: BoxFit.cover,),
+                        CarouselSlider(
+                          options: CarouselOptions(
+                            autoPlay: true,
+                            aspectRatio: 2.0,
+                            enlargeCenterPage: true,
+                            enlargeStrategy: CenterPageEnlargeStrategy.height,
+                          ),
+                          items: imageUrl.map((item) => Container(
+                            child: Container(
+                              margin: EdgeInsets.all(5.0),
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                  child: Stack(
+                                    children: <Widget>[
+                                      Image.network(item, fit: BoxFit.cover, width: 1000.0),
+                                      Positioned(
+                                        bottom: 0.0,
+                                        left: 0.0,
+                                        right: 0.0,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                              colors: [
+                                                Color.fromARGB(200, 0, 0, 0),
+                                                Color.fromARGB(0, 0, 0, 0)
+                                              ],
+                                              begin: Alignment.bottomCenter,
+                                              end: Alignment.topCenter,
+                                            ),
+                                          ),
+                                          padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                                          child: Text(
+                                            'No. ${imageUrl.indexOf(item)+1} image',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 20.0,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                              ),
+                            ),
+                          )).toList(),
+                        ),
                         Positioned(
                           right: 13,
                           top: 2,
@@ -98,8 +161,36 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         Positioned(
                           right: 10,
                           child: IconButton(
-                            icon: Icon(Icons.favorite_border,color: Colors.blue,),
-                            onPressed: (){},
+                            icon: Icon(widget.products.favouriteCheck==false?Icons.favorite_border:Icons.favorite,color: Colors.red,),
+                            onPressed: (){
+                              setState(() {
+                                widget.products.favouriteCheck=!widget.products.favouriteCheck;
+
+                                if(widget.products.favouriteCheck==true){
+                                  widget.products.favouriteCheck=='statusTrue';
+                                  ProductsDBService.addProductWithUSER(widget.products,email).then((value){
+                                    setState(() {
+                                      print(('isFavourite True'));
+                                    });
+                                  });
+                                  ProductsDBService.addProductBYCategoryWithUser(widget.products, email);
+                                  ProductsDBService.addProductByAuthorWithUser(widget.products, email);
+                                  ProductsDBService.addFavouriteProductsWithUser(widget.products, email);
+
+                                }else{
+                                  widget.products.favouriteCheck=='statusfalse';
+                                  ProductsDBService.addProductWithUSER(widget.products,email).then((value){
+                                    setState(() {
+                                      print(('isFavourite False'));
+                                    });
+                                  });
+                                  ProductsDBService.addProductBYCategoryWithUser(widget.products, email);
+                                  ProductsDBService.addProductByAuthorWithUser(widget.products, email);
+                                  ProductsDBService.removeAllFavouriteWithUser(widget.products,email);
+                                }
+
+                              });
+                            },
                           ),
                         ),
 
@@ -211,7 +302,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                             ),),
-                            Text('BDT ${widget.products.price}',style: TextStyle(
+                            Text(widget.products.price==null?'BDT 0':'BDT ${widget.products.price}',style: TextStyle(
                               fontSize: 17,
                               fontWeight: FontWeight.w700
                             ),),
@@ -223,7 +314,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   Container(
                     width: double.infinity,
                       padding: EdgeInsets.all(8),
-                      child: Text("Description: \n\nConfectionery Drinks-Dessert Cosmetic Cookeries Electronics Fish-Meat Fruits-Vegetable Medicine Study Tools Quran Hades Gas Snacks",style: TextStyle(
+                      child: Text("Description: \n\n${widget.products.description}",style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w500
                       ),))

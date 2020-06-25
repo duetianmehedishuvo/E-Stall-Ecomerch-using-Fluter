@@ -8,7 +8,7 @@ import 'package:estallecomerch/helpers/products_db_service.dart';
 import 'package:estallecomerch/helpers/provider/products_provider.dart';
 import 'package:estallecomerch/helpers/user_utils.dart';
 import 'package:estallecomerch/models/products_models_user.dart';
-import 'package:estallecomerch/pages/add_product_screen.dart';
+import 'package:estallecomerch/pages/about_developer_page.dart';
 import 'package:estallecomerch/pages/catagory_list_pages.dart';
 import 'package:estallecomerch/pages/catagory_wise_product.dart';
 import 'package:estallecomerch/pages/login_page.dart';
@@ -69,48 +69,81 @@ class _HomeScreenState extends State<HomeScreen> {
 
         UserUtils.getUserSessionUsingPref().then((value){
 
-          ProductsDBService.getAllProducts().then((listOfProducts){
-            listOfProducts.forEach((products) {
+          if(value==false){
 
-              productsUserId.name=products.name;
-              productsUserId.nameKey=products.nameKey;
-              productsUserId.current_price=products.current_price;
-              productsUserId.last_price=products.last_price;
-              productsUserId.authorName=products.authorName;
-              productsUserId.imageUrl=products.imageUrl;
-              productsUserId.category=products.category;
-              productsUserId.description=products.description;
-              productsUserId.condition=products.condition;
-              productsUserId.quantity=products.quantity;
+            print('False Form Home');
 
+
+
+            ProductsDBService.getAllProducts().then((listOfProducts){
+              listOfProducts.forEach((products) {
+
+                print('Delete  Method Call');
+
+                productsUserId.name=products.name;
+                productsUserId.nameKey=products.nameKey;
+                productsUserId.current_price=products.current_price;
+                productsUserId.last_price=products.last_price;
+                productsUserId.authorName=products.authorName;
+                productsUserId.imageUrl=products.imageUrl;
+                productsUserId.imageUrl2=products.imageUrl2;
+                productsUserId.imageUrl3=products.imageUrl3;
+                productsUserId.category=products.category;
+                productsUserId.description=products.description;
+                productsUserId.condition=products.condition;
+                productsUserId.quantity=products.quantity;
 
                 print(value.toString());
-                if(value==true){
-                  ProductsDBService.getAllProductsWithUser(email).then((value){
-                    value.forEach((element) {
-                      print('True Method Declare');
-                      element.count==null?productsUserId.count=0:productsUserId.count=element.count;
-                      element.price==null?productsUserId.price=0:productsUserId.price=element.price;
-                      ProductsDBService.addProductWithUSER(productsUserId,email);
-                      ProductsDBService.addProductBYCategoryWithUser(productsUserId, email);
-                      ProductsDBService.addProductByAuthorWithUser(productsUserId, email);
 
+                productsUserId.count=0;
+                productsUserId.favouriteCheck=false;
 
+                CartService.addtocartProductDelete(products.nameKey, email);
+                ProductsDBService.addProductWithUSER(productsUserId,email);
+                ProductsDBService.addProductBYCategoryWithUser(productsUserId, email);
+                ProductsDBService.addProductByAuthorWithUser(productsUserId, email);
 
-                    });
-                  });
-                }
-                if(value==false){
-                  productsUserId.count=0;
-                  productsUserId.favouriteCheck=false;
-                  CartService.addtocartProductDelete(products.nameKey, email);
-                  ProductsDBService.addProductWithUSER(productsUserId,email);
-                  ProductsDBService.addProductBYCategoryWithUser(productsUserId, email);
-                  ProductsDBService.addProductByAuthorWithUser(productsUserId, email);
-                }
-
+              });
             });
-          });
+
+
+          }
+
+          if(value==true){
+            ProductsDBService.getAllProducts().then((listOfProducts){
+              listOfProducts.forEach((products) {
+
+                productsUserId.name=products.name;
+                productsUserId.nameKey=products.nameKey;
+                productsUserId.current_price=products.current_price;
+                productsUserId.last_price=products.last_price;
+                productsUserId.authorName=products.authorName;
+                productsUserId.imageUrl=products.imageUrl;
+                productsUserId.imageUrl2=products.imageUrl2;
+                productsUserId.imageUrl3=products.imageUrl3;
+                productsUserId.category=products.category;
+                productsUserId.description=products.description;
+                productsUserId.condition=products.condition;
+                productsUserId.quantity=products.quantity;
+
+
+                ProductsDBService.getAllProductsWithUser(email).then((value1){
+                  value1.forEach((element) {
+                    print('True Method Declare');
+                    element.count==null?productsUserId.count=0:productsUserId.count=element.count;
+                    element.price==null?productsUserId.price=0:productsUserId.price=element.price;
+
+                    ProductsDBService.addProductWithUSER(productsUserId,email);
+                    ProductsDBService.addProductBYCategoryWithUser(productsUserId, email);
+                    ProductsDBService.addProductByAuthorWithUser(productsUserId, email);
+
+                  });
+                });
+              });
+            });
+          }
+
+
         });
 
       });
@@ -283,9 +316,7 @@ class _HomeScreenState extends State<HomeScreen> {
           color: Colors.blue.withOpacity(.5),
           child: ListTile(
               onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context)=>HomeScreen()
-                ));
+                Navigator.of(context).pushNamed(HomeScreen.route);
               },
               leading: Icon(Icons.home,color: Colors.white,), title: Text("Home")),
         ),
@@ -403,13 +434,13 @@ class _HomeScreenState extends State<HomeScreen> {
           color: Colors.blue.withOpacity(.5),
           child: ListTile(
               onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context)=>AddProductsScreen()
-                )).then((_){
-                  setState(() {
-
-                  });
-                });
+//                Navigator.of(context).push(MaterialPageRoute(
+//                  builder: (context)=>AddProductsScreen()
+//                )).then((_){
+//                  setState(() {
+//
+//                  });
+//                });
               },
               leading: Icon(Icons.info,color: Colors.white,), title: Text("About")),
         ),
@@ -422,7 +453,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: ListTile(
               onTap: (){
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context)=>AddProductsScreen()
+                  builder: (context)=>AboutDeveloperPage()
                 ));
               },
               leading: Icon(Icons.developer_board,color: Colors.white,), title: Text("About Developer")),
@@ -553,7 +584,7 @@ class ProductSearchDelegate extends SearchDelegate{
             List<ProductsUserId> suggestions=query==null?
             snapshot.data:
             snapshot.data.where((products)=>
-                products.nameKey.toLowerCase().startsWith(query.toLowerCase())).toList();
+            (products.nameKey.toLowerCase().startsWith(query.toLowerCase()))||(products.name.toLowerCase().startsWith(query.toLowerCase()))||(products.authorName.toLowerCase().startsWith(query.toLowerCase()))).toList();
 
             return StaggeredGridView.countBuilder(crossAxisCount: 4,
                 itemCount: suggestions.length,

@@ -213,6 +213,8 @@ class _ProductsWidgetsState extends State<ProductsWidgets> {
     chooseProductModels.current_price=widget.products.current_price;
     chooseProductModels.last_price=widget.products.last_price;
     chooseProductModels.imageUrl=widget.products.imageUrl;
+    chooseProductModels.imageUrl2=widget.products.imageUrl2;
+    chooseProductModels.imageUrl3=widget.products.imageUrl3;
     chooseProductModels.description=widget.products.description;
     chooseProductModels.condition=widget.products.condition;
     chooseProductModels.quantity=widget.products.quantity;
