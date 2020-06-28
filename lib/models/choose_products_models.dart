@@ -5,6 +5,7 @@ class ChooseProductModels{
   String imageUrl2;
   String imageUrl3;
   String nameKey;
+  String string;
   num current_price;
   num last_price;
   String category;
