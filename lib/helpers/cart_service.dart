@@ -40,12 +40,12 @@ class CartService{
     final doc=db.collection(COLLECTION_PAYMENT_SHOP).document(date).collection(paymentProductModels.authName).document(email).collection(time).document(paymentProductModels.keyName);
     return await doc.setData(paymentProductModels.tomap());
   }
-  static Future<List<PaymentProductModels>> getShopNameForPayment(String authName,String date,String email,String time)async{
-    QuerySnapshot snapshot=await db.collection(COLLECTION_PAYMENT_SHOP).document(date).collection(authName).document(email).collection(time).getDocuments();
-    if(snapshot!=null){
-      return snapshot.documents.map((e) => PaymentProductModels.fromMap(e.data)).toList();
-    }
-  }
+//  static Future<List<PaymentProductModels>> getShopNameForPayment(String authName,String date,String email,String time)async{
+//    QuerySnapshot snapshot=await db.collection(COLLECTION_PAYMENT_SHOP).document(date).collection(authName).document(email).collection(time).getDocuments();
+//    if(snapshot!=null){
+//      return snapshot.documents.map((e) => PaymentProductModels.fromMap(e.data)).toList();
+//    }
+//  }
 
 
   static Future addShopName(ShopModels shopname,String date)async{
@@ -53,12 +53,12 @@ class CartService{
     return await doc.setData(shopname.tomap());
   }
 
-  static Future<List<ShopModels>> getShopNameForPaymentName(String date)async{
-    QuerySnapshot snapshot=await db.collection(COLLECTION_PAYMENT_SHOP_NAME).document(date).collection('shopName').getDocuments();
-    if(snapshot!=null){
-      return snapshot.documents.map((e) => ShopModels.formMap(e.data)).toList();
-    }
-  }
+//  static Future<List<ShopModels>> getShopNameForPaymentName(String date)async{
+//    QuerySnapshot snapshot=await db.collection(COLLECTION_PAYMENT_SHOP_NAME).document(date).collection('shopName').getDocuments();
+//    if(snapshot!=null){
+//      return snapshot.documents.map((e) => ShopModels.formMap(e.data)).toList();
+//    }
+//  }
 
 
 

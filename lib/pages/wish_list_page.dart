@@ -60,7 +60,7 @@ class _WishListPageState extends State<WishListPage> {
                 children: <Widget>[
                   CircularProgressIndicator(),
                   SizedBox(height: 10,),
-                  Text('Wait..........'),
+                  Text('Wait..'),
                 ],
               );
             },

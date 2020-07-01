@@ -36,7 +36,7 @@ class _AboutDeveloperPageState extends State<AboutDeveloperPage> {
         linkedin: "mehedi-hasan-shuvo-94651a165/",
         email: "duetinmehedishuvo@gmail.com",
         whatsapp: "+8801303129515", //without international code e.g 22994684468.
-
+        twitter: 'mdmehedishuvo',
       ),
     );
   }

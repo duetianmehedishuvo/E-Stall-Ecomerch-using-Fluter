@@ -25,7 +25,6 @@ class _ChooseProductWidgetState extends State<ChooseProductWidget> {
   int countNumber;
   AuthenticationService authenticationService;
   String email;
-  double price=0.0;
   ProductsUserId productsUserId;
 
 
@@ -176,7 +175,7 @@ class _ChooseProductWidgetState extends State<ChooseProductWidget> {
   }
 
 
-  void initializationUserProductsScreen(String email,double price) {
+  void initializationUserProductsScreen(String email,num price) {
       productsUserId.name=widget.chooseProductModels.name;
       productsUserId.nameKey=widget.chooseProductModels.nameKey;
       productsUserId.imageUrl=widget.chooseProductModels.imageUrl;

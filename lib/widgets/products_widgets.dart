@@ -31,6 +31,7 @@ class _ProductsWidgetsState extends State<ProductsWidgets> {
   bool isFavourite=false;
 
   ChooseProductModels chooseProductModels=ChooseProductModels();
+  ProductsProvider productsProvider=ProductsProvider();
 
 
   @override
@@ -219,6 +220,10 @@ class _ProductsWidgetsState extends State<ProductsWidgets> {
     chooseProductModels.condition=widget.products.condition;
     chooseProductModels.quantity=widget.products.quantity;
     chooseProductModels.category=widget.products.category;
+
+
+
+
   }
 
   void _rightArrowClick() {

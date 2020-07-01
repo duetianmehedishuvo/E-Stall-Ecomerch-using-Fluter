@@ -28,28 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
           overflow: Overflow.visible,
           alignment: Alignment.center,
           children: <Widget>[
-            Image.asset('images/splash.png',width: double.infinity,height: double.infinity,fit: BoxFit.cover,),
-            Image.asset('images/splash_image.png'),
-            AnimatedContainer(
-              duration: Duration(seconds: 3),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Container(
-                    width:130,
-                      height: 130,
-                      alignment: Alignment.center,
-                      decoration:BoxDecoration(
-                        color: Colors.blueGrey,
-                        borderRadius: BorderRadius.circular(200)
-                      ),
-                      child: Text('E-stall',style: TextStyle(color: Colors.white,
-                      fontSize: 22,
-                      letterSpacing: .8,
-                      fontWeight: FontWeight.bold),)),
-                ],
-              ),
-            ),
+            Image.asset('images/splash.jpg',width: double.infinity,height: double.infinity,fit: BoxFit.cover,),
           ],
         ),
       ),

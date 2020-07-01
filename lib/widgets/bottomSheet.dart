@@ -34,7 +34,7 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
 
   PaymentModels paymentModelssub;
   String transitionID='';
-  String paymentSystem='';
+  String paymentSystem='Bkash';
   String formattedDate;
   String formattedTime;
 
@@ -62,8 +62,7 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
     paymentModelssub.paymentProductModels=widget._paymentProductModel;
     paymentModelssub.price=widget.paymentModels.price;
     paymentModelssub.count=widget.paymentModels.count;
-    paymentModelssub.paymentMethod=paymentSystem;
-    paymentModelssub.transactionNumber=transitionID;
+
 
     paymentGetEmail.email=widget.profile.email;
     paymentGetEmail.date=formattedTime;
@@ -74,6 +73,9 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
     if(isContainer){
       if(paymentKey.currentState.validate()){
         paymentKey.currentState.save();
+        paymentModelssub.paymentMethod=paymentSystem;
+        paymentModelssub.transactionNumber=transitionID;
+
         PaymentService.addPaymentEmail(paymentGetEmail, formattedDate);
         PaymentService.addPaymentTime(paymentGetEmail, formattedDate);
         PaymentService.addPaymentShopName(paymentModelssub, formattedDate,formattedTime);
@@ -95,7 +97,9 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
         });
       }
     }else{
-
+      paymentModelssub.paymentMethod=paymentSystem;
+      paymentModelssub.transactionNumber=transitionID;
+      
       PaymentService.addPaymentEmail(paymentGetEmail, formattedDate);
       PaymentService.addPaymentTime(paymentGetEmail, formattedDate);
 
@@ -150,9 +154,9 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                 children: <Widget>[
                   Expanded(
                     child: Container(
-                      height:50,
+                      height:40,
                       decoration: BoxDecoration(
-                        color: Colors.green,
+                        color: Colors.blue.withOpacity(.8),
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(12),
                             bottomLeft: Radius.circular(12)
@@ -160,13 +164,13 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                       ),
                       margin: EdgeInsets.only(right: 2),
                       child: FlatButton(
-                        child: Text('Case In',style: TextStyle(
+                        child: Text('Cash On Delivery',style: TextStyle(
                             color: Colors.white
                         ),),
                         onPressed: (){
                           setState(() {
                             isContainer=false;
-                            paymentSystem='Cash IN';
+                            paymentSystem='Cash on delivery';
                           });
                         },
                       ),
@@ -174,7 +178,7 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                   ),
                   Expanded(
                     child: Container(
-                      height:50,
+                      height:40,
                       decoration: BoxDecoration(
                         color: Colors.pink,
                         borderRadius: BorderRadius.only(
@@ -190,11 +194,11 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                         onPressed: (){
                           showAlertDialog(context, "step 1: Dial *247#" +
                               "\nstep 2:Select option 1(Send Money)" +
-                              "\nstep 3: Enter this Number (+8801777368276)" +
+                              "\nstep 3: Enter this Number (01624054455)" +
                               "\nstep 4:Enter Amount" +
                               "\nstep 5:Enter Reference like(1234)" +
                               "\nstep6:Enter Your Pin number" +
-                              "\nstep 7:Copy Tranistion number and Paste Below Box.", 'বিকাশের মাধ্যমে মূল্য পরিশোধ করার নিয়মঃ');
+                              "\nstep 7:Copy Transition number and Paste Below Box.", 'বিকাশের মাধ্যমে মূল্য পরিশোধ করার নিয়মঃ');
 
                           setState(() {
                             isContainer=true;
@@ -235,19 +239,20 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
             ),
             Container(
                 padding: EdgeInsets.only(top: 10),
-                child: Text(isContainer?'Selected Bkash Payment Option':'Selected Case In Payment Option',style: TextStyle(
-                  color: isContainer?Colors.pink:Colors.green,
+                child: Text(isContainer?'Selected Bkash Payment Option':'Selected Cash on delivery',style: TextStyle(
+                  color: isContainer?Colors.pink:Colors.blue,
                 ),)),
             Container(
               width: double.infinity,
               margin: EdgeInsets.only(top: 10),
               decoration: BoxDecoration(
-                color: Colors.blue.withOpacity(.8),
+                color: Colors.green.withOpacity(.7),
                 borderRadius: BorderRadius.circular(10)
               ),
               child: FlatButton(
-                child: Text('Finally Order',style: TextStyle(
-                  color: Colors.white
+                child: Text('Confirm Order',style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
                 ),),
                 onPressed: _orderSubmit,
               ),

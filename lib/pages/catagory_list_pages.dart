@@ -1,4 +1,3 @@
-import 'package:estallecomerch/pages/catagory_wise_product.dart';
 import 'package:estallecomerch/pages/catagory_wise_product_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +8,17 @@ String mask_sanitiser='mask_sanitiser';
 String gas_cylinder='gas_cylinder';
 String drink_desert='drink_desert';
 String groceries='groceries';
+String electronics='electronic';
+String furnitures='furniture';
+
+String dcosmetics='Cosmetics';
+String dfashion='Fashion';
+String dmask_sanitiser='Mask & Sanitizer';
+String dgas_cylinder='Gas Cylinder';
+String ddrink_desert='Drink & Dessert';
+String dgroceries='Groceries';
+String delectronics='Electronics';
+String dfurnitures='Furniture';
 
 class CategoryListPages extends StatefulWidget {
   @override
@@ -29,7 +39,7 @@ class _CategoryListPagesState extends State<CategoryListPages> {
                 child: GestureDetector(
                   onTap: (){
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context)=>CategoryWiseProductList(categoryName: groceries,isListPage: true,),
+                      builder: (context)=>CategoryWiseProductList(categoryName: groceries,isListPage: true,displayName: dgroceries,),
                     ));
                   },
                   child: Container(
@@ -38,34 +48,33 @@ class _CategoryListPagesState extends State<CategoryListPages> {
                     child: Stack(
                       overflow: Overflow.visible,
                       children: <Widget>[
-                        Image.asset('images/grocery.jpg',
+                        Image.asset('images/Grocery-Final.png',
                           width: double.infinity,
                           height: double.infinity,
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                         ),
-//                        Container(
-//                          width: double.infinity,
-//                          height: double.infinity,
-//                          color: Colors.blue.withOpacity(.3),
-//                        ),
-//                        Positioned(
-//                          right: 5,
-//                          bottom: 5,
-//                          left: 5,
-//                          child: Container(
-//                            alignment: Alignment.center,
-//                            padding: EdgeInsets.all(8),
-//                            decoration: BoxDecoration(
-//                                color: Colors.black.withOpacity(.5),
-//                                borderRadius: BorderRadius.circular(10)
-//                            ),
-//                            child: Text('Groceries',style: TextStyle(
-//                              fontSize: 20,
-//                              color: Colors.white,
-//                              fontWeight: FontWeight.w500,
-//                            ),),
-//                          ),
-//                        )
+                        Container(
+                          width: double.infinity,
+                          height: double.infinity,
+                        ),
+                        Positioned(
+                          right: 5,
+                          bottom: 5,
+                          left: 5,
+                          child: Container(
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(.5),
+                                borderRadius: BorderRadius.circular(10)
+                            ),
+                            child: Text('Groceries',style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                            ),),
+                          ),
+                        )
                       ],
                     ),
                   ),
@@ -75,7 +84,7 @@ class _CategoryListPagesState extends State<CategoryListPages> {
                 child: GestureDetector(
                   onTap: (){
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context)=>CategoryWiseProductList(categoryName: drink_desert,isListPage: true,),
+                      builder: (context)=>CategoryWiseProductList(categoryName: drink_desert,isListPage: true,displayName: ddrink_desert,),
                     ));
                   },
                   child: Container(
@@ -84,34 +93,33 @@ class _CategoryListPagesState extends State<CategoryListPages> {
                     child: Stack(
                       overflow: Overflow.visible,
                       children: <Widget>[
-                        Image.asset('images/grocery (2).jpg',
+                        Image.asset('images/Drinks.png',
                           width: double.infinity,
                           height: double.infinity,
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                         ),
-//                        Container(
-//                          width: double.infinity,
-//                          height: double.infinity,
-//                          color: Colors.blue.withOpacity(.3),
-//                        ),
-//                        Positioned(
-//                          right: 5,
-//                          bottom: 5,
-//                          left: 5,
-//                          child: Container(
-//                            alignment: Alignment.center,
-//                            padding: EdgeInsets.all(8),
-//                            decoration: BoxDecoration(
-//                                color: Colors.black.withOpacity(.5),
-//                                borderRadius: BorderRadius.circular(10)
-//                            ),
-//                            child: Text('Drink & Desert',style: TextStyle(
-//                              fontSize: 20,
-//                              color: Colors.white,
-//                              fontWeight: FontWeight.w500,
-//                            ),),
-//                          ),
-//                        )
+                        Container(
+                          width: double.infinity,
+                          height: double.infinity,
+                        ),
+                        Positioned(
+                          right: 5,
+                          bottom: 5,
+                          left: 5,
+                          child: Container(
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(.5),
+                                borderRadius: BorderRadius.circular(10)
+                            ),
+                            child: Text('Drink & Dessert',style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                            ),),
+                          ),
+                        )
                       ],
                     ),
                   ),
@@ -123,7 +131,7 @@ class _CategoryListPagesState extends State<CategoryListPages> {
                 child: GestureDetector(
                   onTap: (){
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context)=>CategoryWiseProductList(categoryName: gas_cylinder,isListPage: true,),
+                      builder: (context)=>CategoryWiseProductList(categoryName: gas_cylinder,isListPage: true,displayName: dgas_cylinder,),
                     ));
                   },
                   child: Container(
@@ -132,15 +140,14 @@ class _CategoryListPagesState extends State<CategoryListPages> {
                     child: Stack(
                       overflow: Overflow.visible,
                       children: <Widget>[
-                        Image.asset('images/Gas R.jpg',
+                        Image.asset('images/Gas R.png',
                           width: double.infinity,
                           height: double.infinity,
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                         ),
                         Container(
                           width: double.infinity,
                           height: double.infinity,
-                          color: Colors.blue.withOpacity(.3),
                         ),
                         Positioned(
                           right: 5,
@@ -169,7 +176,7 @@ class _CategoryListPagesState extends State<CategoryListPages> {
                 child: GestureDetector(
                   onTap: (){
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context)=>CategoryWiseProductList(categoryName: mask_sanitiser,isListPage: true,),
+                      builder: (context)=>CategoryWiseProductList(categoryName: mask_sanitiser,isListPage: true,displayName: dmask_sanitiser,),
                     ));
                   },
                   child: Container(
@@ -178,15 +185,14 @@ class _CategoryListPagesState extends State<CategoryListPages> {
                     child: Stack(
                       overflow: Overflow.visible,
                       children: <Widget>[
-                        Image.asset('images/mask R.jpg',
+                        Image.asset('images/mask R.png',
                           width: double.infinity,
                           height: double.infinity,
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                         ),
                         Container(
                           width: double.infinity,
                           height: double.infinity,
-                          color: Colors.blue.withOpacity(.3),
                         ),
                         Positioned(
                           right: 5,
@@ -218,7 +224,7 @@ class _CategoryListPagesState extends State<CategoryListPages> {
                 child: GestureDetector(
                   onTap: (){
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context)=>CategoryWiseProductList(categoryName: fashion,isListPage: true,),
+                      builder: (context)=>CategoryWiseProductList(categoryName: fashion,isListPage: true,displayName: dfashion,),
                     ));
                   },
                   child: Container(
@@ -227,15 +233,14 @@ class _CategoryListPagesState extends State<CategoryListPages> {
                     child: Stack(
                       overflow: Overflow.visible,
                       children: <Widget>[
-                        Image.asset('images/Fasion Final R.jpg',
+                        Image.asset('images/Fasion Final R.png',
                           width: double.infinity,
                           height: double.infinity,
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                         ),
                         Container(
                           width: double.infinity,
                           height: double.infinity,
-                          color: Colors.blue.withOpacity(.3),
                         ),
                         Positioned(
                           right: 5,
@@ -264,7 +269,7 @@ class _CategoryListPagesState extends State<CategoryListPages> {
                 child: GestureDetector(
                   onTap: (){
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context)=>CategoryWiseProductList(categoryName: cosmetics,isListPage: true,),
+                      builder: (context)=>CategoryWiseProductList(categoryName: cosmetics,isListPage: true,displayName: dcosmetics,),
                     ));
                   },
                   child: Container(
@@ -273,15 +278,14 @@ class _CategoryListPagesState extends State<CategoryListPages> {
                     child: Stack(
                       overflow: Overflow.visible,
                       children: <Widget>[
-                        Image.asset('images/Cosmetics Final R.jpg',
+                        Image.asset('images/Cosmetics Final R.png',
                           width: double.infinity,
                           height: double.infinity,
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                         ),
                         Container(
                           width: double.infinity,
                           height: double.infinity,
-                          color: Colors.blue.withOpacity(.3),
                         ),
                         Positioned(
                           right: 5,
@@ -313,7 +317,7 @@ class _CategoryListPagesState extends State<CategoryListPages> {
                 child: GestureDetector(
                   onTap: (){
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context)=>CategoryWiseProductList(categoryName: 'electronic',isListPage: true,),
+                      builder: (context)=>CategoryWiseProductList(categoryName: 'electronic',isListPage: true,displayName: delectronics,),
                     ));
                   },
                   child: Container(
@@ -322,15 +326,14 @@ class _CategoryListPagesState extends State<CategoryListPages> {
                     child: Stack(
                       overflow: Overflow.visible,
                       children: <Widget>[
-                        Image.asset('images/Electronic R.jpg',
+                        Image.asset('images/Electronic R.png',
                           width: double.infinity,
                           height: double.infinity,
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                         ),
                         Container(
                           width: double.infinity,
                           height: double.infinity,
-                          color: Colors.blue.withOpacity(.3),
                         ),
                         Positioned(
                           right: 5,
@@ -359,7 +362,7 @@ class _CategoryListPagesState extends State<CategoryListPages> {
               child: GestureDetector(
                 onTap: (){
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context)=>CategoryWiseProductList(categoryName: 'furniture',isListPage: true,),
+                    builder: (context)=>CategoryWiseProductList(categoryName: 'furniture',isListPage: true,displayName: dfurnitures,),
                   ));
                 },
                 child: Container(
@@ -368,15 +371,14 @@ class _CategoryListPagesState extends State<CategoryListPages> {
                   child: Stack(
                     overflow: Overflow.visible,
                     children: <Widget>[
-                      Image.asset('images/Furniture R.jpg',
+                      Image.asset('images/Furniture R.png',
                         width: double.infinity,
                         height: double.infinity,
-                        fit: BoxFit.cover,
+                        fit: BoxFit.fill,
                       ),
                       Container(
                         width: double.infinity,
                         height: double.infinity,
-                        color: Colors.blue.withOpacity(.3),
                       ),
                       Positioned(
                         right: 5,

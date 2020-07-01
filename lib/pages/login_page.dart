@@ -1,6 +1,7 @@
 import 'package:estallecomerch/helpers/authentication_service.dart';
 import 'package:estallecomerch/pages/homeScreen.dart';
 import 'package:estallecomerch/pages/sign_up_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -13,10 +14,27 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
 
   String email,password;
+  String errorSms='';
 
   AuthenticationService authenticationService;
   final _formKey=GlobalKey<FormState>();
   String uid;
+
+  showAlertDialog(BuildContext context){
+    AlertDialog alert=AlertDialog(
+      content: new Row(
+        children: [
+          CircularProgressIndicator(),
+          Container(margin: EdgeInsets.only(left: 5),child:Text("Loading" )),
+        ],),
+    );
+    showDialog(barrierDismissible: true,
+      context:context,
+      builder:(BuildContext context){
+        return alert;
+      },
+    );
+  }
 
 
 
@@ -40,16 +58,26 @@ class _LoginPageState extends State<LoginPage> {
     if(_formKey.currentState.validate()){
       _formKey.currentState.save();
 
-      try{
-        uid=await authenticationService.login(email, password);
+      FirebaseAuth firebaseAuth=FirebaseAuth.instance;
+
+      try {
+        showAlertDialog(context);
+        AuthResult authResult=await firebaseAuth.signInWithEmailAndPassword(
+            email: email, password: password);
+        uid=authResult.user.uid;
         if(uid!=null){
+          Navigator.pop(context);
           authenticationService.saveUserPhoneNumberInPreference(email);
           Navigator.of(context).pushReplacementNamed(HomeScreen.route);
+        }else{
+          setState(() {
+            errorSms='User Not Found Please Registration First';
+          });
         }
-      }catch(error){
-        print(error.message);
+      }catch(e){
+        print(e);
+        errorSms=e.message;
       }
-
     }
   }
 
@@ -69,7 +97,7 @@ class _LoginPageState extends State<LoginPage> {
                     shape: BoxShape.rectangle,
                   ),
                   alignment: Alignment.center,
-                  child: Text('Login Section',
+                  child: Text('User Login',
                     style: TextStyle(
                         fontSize: 16,
                         color: Colors.blue,
@@ -79,7 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                 margin: EdgeInsets.only(top: 50,bottom: 20),
                 duration: Duration(milliseconds: 5000),
                 child: Center(
-                  child: Image.asset('images/E-stall.png',
+                  child: Image.asset('images/logo.png',
                     width: MediaQuery.of(context).size.width/3,
                     height: MediaQuery.of(context).size.width/3,
                     fit: BoxFit.cover,),
@@ -115,7 +143,7 @@ class _LoginPageState extends State<LoginPage> {
                       TextFormField(
                         obscureText:true,
                         decoration: InputDecoration(
-                            labelText: 'Enter Your valid Password al least 4 character',
+                            labelText: 'Enter valid Password al least 6 character',
                             border: OutlineInputBorder()
                         ),
                         validator: (value){
@@ -155,6 +183,13 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('${errorSms}',style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 18,
+                ),),
               ),
             ],
           ),

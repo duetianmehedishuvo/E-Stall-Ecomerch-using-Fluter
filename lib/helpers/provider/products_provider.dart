@@ -12,12 +12,10 @@ class ProductsProvider with ChangeNotifier{
   int getCount(String email){
     _x=0;
     CartService.getAllChooseProducts(email).then((prodcustList){
-      prodcustList.forEach((element) {
-        _x+=element.count;
-        notifyListeners();
-      });
-      return _x;;
+      _x=prodcustList.length;
+      notifyListeners();
     });
+    return _x;;
   }
 
   num getTotalprice(String email){

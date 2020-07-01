@@ -73,15 +73,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                   Flexible(
-                      flex: 2,
-                      child: Text('SingUp Your Info',style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold),overflow: TextOverflow.ellipsis,))
+                      flex: 4,
+                      child: Text('User Registration Form',style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold),overflow: TextOverflow.ellipsis,))
                 ],
               ),
               AnimatedContainer(
                 margin: EdgeInsets.only(top: 50,bottom: 20),
                 duration: Duration(milliseconds: 5000),
                 child: Center(
-                  child: Image.asset('images/E-stall.png',
+                  child: Image.asset('images/logo.png',
                     width: MediaQuery.of(context).size.width/3,
                     height: MediaQuery.of(context).size.width/3,
                     fit: BoxFit.cover,),
@@ -97,7 +97,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         color: Colors.white,
                         child: TextFormField(
                           decoration: InputDecoration(
-                            labelText: 'আপনার পূর্ন নাম লিখুন *',
+                            labelText: 'Enter Your Name *',
                             border: OutlineInputBorder()
                           ),
                           validator: (value){
@@ -117,7 +117,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         child: TextFormField(
                           keyboardType: TextInputType.phone,
                           decoration: InputDecoration(
-                              labelText: 'মোবাইল নাম্বার দিন *',
+                              labelText: 'Enter a valid phone number *',
                               border: OutlineInputBorder()
                           ),
                           validator: (value){
@@ -142,7 +142,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         child: TextFormField(
                           obscureText: true,
                           decoration: InputDecoration(
-                              labelText: 'পাসওয়ার্ড লিখুন *',
+                              labelText: 'Type password *',
                               border: OutlineInputBorder()
                           ),
                           validator: (value){
@@ -166,7 +166,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         child: TextFormField(
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
-                              labelText: 'আপনার ঠিকানা লিখুন *',
+                              labelText: 'Enter your Address *',
                               border: OutlineInputBorder()
                           ),
                           // ignore: missing_return

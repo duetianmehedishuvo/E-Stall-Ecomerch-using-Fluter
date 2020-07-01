@@ -6,6 +6,7 @@ import 'package:estallecomerch/helpers/provider/products_provider.dart';
 import 'package:estallecomerch/models/choose_products_models.dart';
 import 'package:estallecomerch/models/products_models_user.dart';
 import 'package:estallecomerch/pages/my_order_page.dart';
+import 'package:estallecomerch/pages/payment_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -215,12 +216,23 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                             ),)
                           ],
                         ),
-                        Container(
-                            child: Text(widget.products.name,style: TextStyle(
-                              fontSize: 22,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold
-                            ),)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Container(
+                                child: Text(widget.products.name,style: TextStyle(
+                                    fontSize: 22,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold
+                                ),)),
+
+                            Text(widget.products.last_price==0?'':'BDT ${widget.products.last_price}',style: TextStyle(
+                                fontSize: 16,
+                              decoration: TextDecoration.lineThrough
+                            ),),
+                          ],
+                        ),
+
                       ],
                     ),
                   ),
@@ -323,17 +335,62 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               Container(
                 alignment: Alignment.center,
                 width: double.infinity,
-                height: 50,
-                color: Colors.blue,
-                child: FlatButton.icon(onPressed: (){
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context)=>MyOrderPage()
-                  ));
-                }, icon: Icon(Icons.card_travel,color: Colors.white.withOpacity(.5),), label: Text('Go To My Order Screen',style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                ),)),
+                height: 60,
+                color: Colors.green.withOpacity(.7),
+                child: Consumer<ProductsProvider>(
+                  builder: (context,cart,child){
+                    return cart.count==0?Container():
+                    Container(
+                      width: double.infinity,
+                      height: 60,
+                      color: Colors.green.withOpacity(.7),
+                      child: FlatButton(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text('Place Order',style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),),
+
+                            Consumer<ProductsProvider>(
+                              builder: (context,data,child){
+                                return Container(
+                                  padding: EdgeInsets.only(right: 15),
+                                  child: Text('৳ ${data.totalPrice}',style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                  ),),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                        onPressed: (){
+                          if(cart.count==0){
+                            Toast.show('Please select items', context);
+                          }else if(cart.totalPrice<200){
+                            Toast.show('Warning : আপনার অর্ডারটি সম্পূর্ণ করতে নূন্যতম ২০০ টাকার পণ্য লাগবে.', context);
+                          }
+                          else{
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context)=>PaymentScreen()
+                            )).then((_){
+                              setState(() {
+
+                              });
+                            });
+                          }
+
+                        },
+                      ),
+                    );
+                  },
+                ),
+
+
               )
             ],
           ),

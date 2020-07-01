@@ -164,7 +164,7 @@ class _ReportPagesState extends State<ReportPages> {
         body: Column(
           children: <Widget>[
             Container(
-              height: 219,
+              height: 260,
               color: Colors.blue.withOpacity(.2),
               child: Column(
                 children: <Widget>[
@@ -180,7 +180,7 @@ class _ReportPagesState extends State<ReportPages> {
                                   color: Colors.blue.withOpacity(.2),
                                   padding: EdgeInsets.all(6),
                                   child: Row(children: <Widget>[
-                                    Expanded(flex: 1,child: Text('নামঃ',style:TextStyle(
+                                    Expanded(flex: 1,child: Text('Name:',style:TextStyle(
                                       fontSize: 17,
                                       color: Colors.black,
                                       fontWeight: FontWeight.w500,
@@ -195,7 +195,7 @@ class _ReportPagesState extends State<ReportPages> {
                                   color: Colors.blue.withOpacity(.4),
                                   padding: EdgeInsets.all(6),
                                   child: Row(children: <Widget>[
-                                    Expanded(flex: 1,child: Text('মোবাইলঃ',style:TextStyle(
+                                    Expanded(flex: 1,child: Text('Mobile:',style:TextStyle(
                                       fontSize: 17,
                                       color: Colors.black,
                                       fontWeight: FontWeight.w500,
@@ -210,14 +210,32 @@ class _ReportPagesState extends State<ReportPages> {
                                   padding: EdgeInsets.all(6),
                                   child: Row(children: <Widget>[
                                     Expanded(flex: 1,child: FittedBox(
-                                      child: Text('পেমেন্ট সিস্টেমঃ',style:TextStyle(
+                                      child: Text('Payment System:',style:TextStyle(
                                         fontSize: 17,
                                         color: Colors.black,
                                         fontWeight: FontWeight.w500,
                                       ),),
                                     ),),
                                     Expanded(flex: 3,child: Text(
-                                      '          ${widget.paymentModels.paymentMethod}'
+                                      '  ${widget.paymentModels.paymentMethod}'
+                                    ),),
+                                  ],),
+                                ),
+
+                                Container(
+                                  height: 46,
+                                  color: Colors.blue.withOpacity(.2),
+                                  padding: EdgeInsets.all(6),
+                                  child: Row(children: <Widget>[
+                                    Expanded(flex: 1,child: FittedBox(
+                                      child: Text('Trans.Number:',style:TextStyle(
+                                        fontSize: 17,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w500,
+                                      ),),
+                                    ),),
+                                    Expanded(flex: 3,child: Text(
+                                      '  ${widget.paymentModels.transactionNumber}'
                                     ),),
                                   ],),
                                 ),
@@ -227,7 +245,7 @@ class _ReportPagesState extends State<ReportPages> {
                                   color: Colors.blue.withOpacity(.4),
                                   padding: EdgeInsets.all(6),
                                   child: Row(children: <Widget>[
-                                    Expanded(flex: 1,child: Text('ঠিকানাঃ',style:TextStyle(
+                                    Expanded(flex: 1,child: Text('Address:',style:TextStyle(
                                       fontSize: 17,
                                       color: Colors.black,
                                       fontWeight: FontWeight.w500,
@@ -268,14 +286,12 @@ class _ReportPagesState extends State<ReportPages> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  FittedBox(child: Container(
-                      alignment: Alignment.center,
-                      width: MediaQuery.of(context).size.width/4,
-                      child: Text('Name'))),
-                  FittedBox(child: Container(child: Text('quantity'))),
-                  FittedBox(child: Container(child: Text('price'))),
-                  FittedBox(child: Container(child: Text('count'))),
-                  FittedBox(child: Container(child: Text('P-price'))),
+                  Expanded(flex:2,child: Text('Name')),
+                  Expanded(child: Text('quantity')),
+                  Expanded(child: Text('price')),
+                  Expanded(child: Text('count')),
+                  Expanded(child: Text('P-price')),
+
                 ],
               ),
             ),
@@ -295,23 +311,14 @@ class _ReportPagesState extends State<ReportPages> {
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
-                                  FittedBox(child: Container(
-                                      alignment: Alignment.center,
-                                      width: MediaQuery.of(context).size.width/4,
-                                      child: Text(snapshot.data[index].name))),
-                                  FittedBox(child: Container(
-                                      alignment: Alignment.topCenter,
-                                      child: Text(snapshot.data[index].quantity))),
-                                  FittedBox(child: Container(
-                                      alignment: Alignment.topLeft,
-                                      child: Text(snapshot.data[index].current_price.toString()))),
-                                  FittedBox(child: Container(
-                                      alignment: Alignment.topLeft,
-                                      child: Text(snapshot.data[index].count.toString()))),
-                                  FittedBox(child: Container(
-                                      alignment: Alignment.topLeft,
-                                      child: Text(snapshot.data[index].totalPrice.toString()))),
+                                  Expanded(flex:2,child: Text(snapshot.data[index].name)),
+                                  Expanded(child: Text(snapshot.data[index].quantity)),
+                                  Expanded(child: Text(snapshot.data[index].current_price.toString())),
+                                  Expanded(child: Text(snapshot.data[index].count.toString())),
+                                  Expanded(child: Text(snapshot.data[index].totalPrice.toString())),
+
                                 ],
                               ),
                             );
@@ -327,6 +334,18 @@ class _ReportPagesState extends State<ReportPages> {
                 ),
               ),
             ),
+            Container(
+              height: 30,
+              alignment: Alignment.centerRight,
+              width: double.infinity,
+              color: Colors.blue.withOpacity(.1),
+              padding: EdgeInsets.only(right: 16),
+              child: Text('Delivery Charge: 30 ৳',style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500
+              ),),
+            ),
+
             Container(
               width: double.infinity,
               color: Colors.blue.withOpacity(.5),
@@ -346,7 +365,7 @@ class _ReportPagesState extends State<ReportPages> {
                       ),
                       Consumer<ProductsProvider>(
                         builder: (context,cart,child){
-                          return FittedBox(child: Text('T-Price: ${cart.totalPrice.toString()} ৳',style: TextStyle(
+                          return FittedBox(child: Text('T-Price: ${cart.totalPrice+30} ৳',style: TextStyle(
                               fontWeight: FontWeight.bold,
                               letterSpacing: .8,
                               color: Colors.black.withOpacity(.8)

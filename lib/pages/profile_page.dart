@@ -83,10 +83,11 @@ class _ProfilePageState extends State<ProfilePage> {
                 return ListView(
                   children: <Widget>[
                     Container(
+                      margin: EdgeInsets.only(top: 10),
                       child: Image.asset(
-                        "images/user4.png",
-                        width: 100,
-                        height: 100,
+                        "images/user.png",
+                        width: 70,
+                        height: 70,
                       ),
                     ),
                     Form(

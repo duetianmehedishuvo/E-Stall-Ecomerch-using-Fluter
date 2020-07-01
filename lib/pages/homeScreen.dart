@@ -9,8 +9,10 @@ import 'package:estallecomerch/helpers/provider/products_provider.dart';
 import 'package:estallecomerch/helpers/user_utils.dart';
 import 'package:estallecomerch/models/products_models_user.dart';
 import 'package:estallecomerch/pages/about_developer_page.dart';
+import 'package:estallecomerch/pages/about_screen.dart';
 import 'package:estallecomerch/pages/catagory_list_pages.dart';
 import 'package:estallecomerch/pages/catagory_wise_product.dart';
+import 'package:estallecomerch/pages/contact_pages.dart';
 import 'package:estallecomerch/pages/login_page.dart';
 import 'package:estallecomerch/pages/my_order_page.dart';
 import 'package:estallecomerch/pages/payment_screen.dart';
@@ -149,6 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     });
   }
+  
 
   @override
   void dispose() {
@@ -161,7 +164,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
 
-    Provider.of<ProductsProvider>(context,listen: false).count;
 
     return DeivaoDrawer(
       controller: drawerController,
@@ -177,7 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: Icon(Icons.menu),
                   onPressed: drawerController.toggle,
                 ),
-                title: Text('E-stall',style: TextStyle(fontSize: 16.0),),
+                title: Text('Estall',style: TextStyle(fontSize: 18.0),),
                 actions: <Widget>[
 
                   IconButton(
@@ -193,37 +195,44 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   Stack(
                     children: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.shopping_cart,color: Colors.white,),
-                        onPressed: (){
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context)=>PaymentScreen()
-                          )).then((_){
-                            setState(() {
+                      Consumer<ProductsProvider>(
+                        builder: (context,data,child){
+                          return IconButton(
+                            icon: Icon(Icons.shopping_cart,color: Colors.white,),
+                            onPressed: (){
+                              data.count==0?Toast.show('Please Select atleast One Product', context):
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context)=>MyOrderPage()
+                              )).then((_){
+                                setState(() {
 
-                            });
-                          });
+                                });
+                              });
+                            },
+                          );
                         },
                       ),
                       Positioned(
                         right: 10,
-                        child: Container(
-                          alignment: Alignment.center,
-                          constraints: BoxConstraints(
-                            maxHeight: 20,
-                            maxWidth: 20,
-                          ),
-                          padding: EdgeInsets.all(3),
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.black
-                          ),
-                          child: Consumer<ProductsProvider>(
-                            builder: (context,cart,child){
-                              return FittedBox(child: Text(cart.count.toString()));
-                            },
-                          ),
-                        ),
+                        child: Consumer<ProductsProvider>(
+                          builder: (context,cart,child){
+                            return cart.count==0?Container():Container(
+                              alignment: Alignment.center,
+                              constraints: BoxConstraints(
+                                maxHeight: 20,
+                                maxWidth: 20,
+                              ),
+                              padding: EdgeInsets.all(3),
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white
+                              ),
+                                child: FittedBox(child: Text(cart.count.toString(),style: TextStyle(
+                                  color: Colors.black,
+                                ),)),
+                            );
+                          },
+                        )
                       )
                     ],
                   ),
@@ -295,9 +304,9 @@ class _HomeScreenState extends State<HomeScreen> {
             children: <Widget>[
               ClipOval(
                 child: Image.asset(
-                  "images/user4.png",
-                  width: 100,
-                  height: 100,
+                  "images/user.png",
+                  width: 70,
+                  height: 70,
                 ),
               ),
               SizedBox(height: 15),
@@ -416,15 +425,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   });
                 });
               },
-              leading: Icon(Icons.reorder,color: Colors.white,), title: Text("My Orders")),
-        ),
-        Container(
-          height: 1,
-          color: Colors.blue.withOpacity(.4),
-        ),
-        Container(
-          color: Colors.blue.withOpacity(.5),
-          child: ListTile(leading: Icon(Icons.contacts,color: Colors.white,), title: Text("Contact Us")),
+              leading: Icon(Icons.reorder,color: Colors.white,), title: Text("My Card")),
         ),
         Container(
           height: 1,
@@ -434,15 +435,25 @@ class _HomeScreenState extends State<HomeScreen> {
           color: Colors.blue.withOpacity(.5),
           child: ListTile(
               onTap: (){
-//                Navigator.of(context).push(MaterialPageRoute(
-//                  builder: (context)=>AddProductsScreen()
-//                )).then((_){
-//                  setState(() {
-//
-//                  });
-//                });
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context)=>ContactPage()
+                ));
               },
-              leading: Icon(Icons.info,color: Colors.white,), title: Text("About")),
+              leading: Icon(Icons.contacts,color: Colors.white,), title: Text("Contact Us")),
+        ),
+        Container(
+          height: 1,
+          color: Colors.blue.withOpacity(.4),
+        ),
+        Container(
+          color: Colors.blue.withOpacity(.5),
+          child: ListTile(
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context)=>AboutScreen()
+                ));
+              },
+              leading: Icon(Icons.info,color: Colors.white,), title: Text("About Us")),
         ),
         Container(
           height: 1,
@@ -456,7 +467,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   builder: (context)=>AboutDeveloperPage()
                 ));
               },
-              leading: Icon(Icons.developer_board,color: Colors.white,), title: Text("About Developer")),
+              leading: Icon(Icons.developer_mode,color: Colors.white,), title: Text("Apps Developer")),
         ),
         Container(
           height: 1,
