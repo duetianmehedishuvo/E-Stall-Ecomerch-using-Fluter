@@ -2,7 +2,7 @@ import 'package:estallecomerch/helpers/authentication_service.dart';
 import 'package:estallecomerch/helpers/cart_service.dart';
 import 'package:estallecomerch/helpers/provider/products_provider.dart';
 import 'package:estallecomerch/models/choose_products_models.dart';
-import 'package:estallecomerch/pages/payment_screen.dart';
+import 'package:estallecomerch/pages/check_out_screen.dart';
 import 'package:estallecomerch/widgets/choose_products_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -62,7 +62,7 @@ class _MyOrderPageState extends State<MyOrderPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('My Card'),
+          title: Text('My Cart'),
           actions: <Widget>[
             Stack(
               children: <Widget>[
@@ -131,7 +131,7 @@ class _MyOrderPageState extends State<MyOrderPage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Text('Check Out',style: TextStyle(
+                            Text('Place Order',style: TextStyle(
                               color: Colors.white,
                               fontSize: 18,
                               fontWeight: FontWeight.w500,
@@ -159,7 +159,7 @@ class _MyOrderPageState extends State<MyOrderPage> {
                           }
                           else{
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context)=>PaymentScreen()
+                                builder: (context)=>CheckOutPages()
                             )).then((_){
                               setState(() {
 

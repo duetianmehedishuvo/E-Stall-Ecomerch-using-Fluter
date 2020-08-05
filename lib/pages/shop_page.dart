@@ -119,7 +119,7 @@ class ShopSearch extends SearchDelegate{
             List<Products> suggestions=query==null?
             snapshot.data:
             snapshot.data.where((products)=>
-                products.authorName.toLowerCase().startsWith(query.toLowerCase())).toList();
+                products.authorName.toLowerCase().contains(query)).toList();
 
             return ListView.builder(
                 itemCount: suggestions.length,

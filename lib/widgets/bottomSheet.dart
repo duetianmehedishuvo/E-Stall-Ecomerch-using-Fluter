@@ -68,33 +68,36 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
     paymentGetEmail.date=formattedTime;
 
 
-
-
     if(isContainer){
       if(paymentKey.currentState.validate()){
         paymentKey.currentState.save();
+
         paymentModelssub.paymentMethod=paymentSystem;
         paymentModelssub.transactionNumber=transitionID;
 
-        PaymentService.addPaymentEmail(paymentGetEmail, formattedDate);
-        PaymentService.addPaymentTime(paymentGetEmail, formattedDate);
-        PaymentService.addPaymentShopName(paymentModelssub, formattedDate,formattedTime);
+          PaymentService.addPaymentEmail(paymentGetEmail, formattedDate);
+          PaymentService.addPaymentTime(paymentGetEmail, formattedDate);
+          PaymentService.addPaymentShopName(paymentModelssub, formattedDate,formattedTime);
 
-        widget._paymentProductModel.forEach((paymentProduct) {
-          setState(() {
-            shopModels.name=paymentProduct.authName;
-            CartService.addShopNameForPayment(paymentProduct, formattedDate, widget.profile.email, formattedTime);
-            CartService.addShopName(shopModels, formattedDate);
+          widget._paymentProductModel.forEach((paymentProduct) {
+            setState(() {
+              shopModels.name=paymentProduct.authName;
+              CartService.addShopNameForPayment(paymentProduct, formattedDate, widget.profile.email, formattedTime);
+              CartService.addShopName(shopModels, formattedDate);
+            });
           });
-        });
 
-        PaymentService.addPayment(paymentModelssub, formattedDate,formattedTime).then((_){
-          Toast.show('Payment Successful', context);
-          Navigator.of(context).pushReplacementNamed(ReportPages.route,arguments: paymentModelssub);
-        }).catchError((error){
-          print(error);
-          Toast.show('Error', context);
-        });
+          PaymentService.addPayment(paymentModelssub, formattedDate,formattedTime).then((_){
+
+          }).catchError((error){
+            print(error);
+            Toast.show('Error', context);
+          });
+
+        Toast.show('Payment Successful', context);
+        Navigator.of(context).pushReplacementNamed(ReportPages.route,arguments: paymentModelssub);
+
+
       }
     }else{
       paymentModelssub.paymentMethod=paymentSystem;
@@ -115,12 +118,15 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
       });
 
       PaymentService.addPayment(paymentModelssub, formattedDate,formattedTime).then((_){
-        Toast.show('Payment Successful', context);
-        Navigator.of(context).pushReplacementNamed(ReportPages.route,arguments: paymentModelssub);
+
       }).catchError((error){
         print(error);
         Toast.show('Error', context);
       });
+
+      Toast.show('Payment Successful', context);
+      Navigator.of(context).pushReplacementNamed(ReportPages.route,arguments: paymentModelssub);
+
     }
   }
 

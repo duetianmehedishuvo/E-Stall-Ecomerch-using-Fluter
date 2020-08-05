@@ -12,7 +12,7 @@ class ContactPage extends StatefulWidget {
 
 class _ContactPageState extends State<ContactPage> {
   String phoneNumber = "09638617507";
-  String email = "estall607@gmail.com";
+  String email = "shokherhat24@gmail.com";
 
   Future<void> _callNumber() async{
     final phoneUrl = 'tel:$phoneNumber';
@@ -65,7 +65,7 @@ class _ContactPageState extends State<ContactPage> {
                 ],
               ),
             ),
-            Image.asset("images/logo.png",height: 150, width: 150,),
+            Image.asset("images/Behind app logo.png",height: 150, width: 150,),
             Container(
               margin: EdgeInsets.only(left: 12,right: 12),
               child: Card(
@@ -140,7 +140,7 @@ class _ContactPageState extends State<ContactPage> {
                             ),
                           ),
                           onTap: (){
-                            _sendUrl('https://facebook.com/estall.com.bd');
+                            _sendUrl('https://facebook.com/shokherhat.com.bd');
                           },
                         ),
                       ),

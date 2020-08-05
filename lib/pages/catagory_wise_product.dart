@@ -2,7 +2,7 @@ import 'package:estallecomerch/helpers/authentication_service.dart';
 import 'package:estallecomerch/helpers/products_db_service.dart';
 import 'package:estallecomerch/helpers/provider/products_provider.dart';
 import 'package:estallecomerch/models/products_models_user.dart';
-import 'package:estallecomerch/pages/payment_screen.dart';
+import 'package:estallecomerch/pages/check_out_screen.dart';
 import 'package:estallecomerch/widgets/products_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -90,7 +90,7 @@ class _CategoryWiseProductState extends State<CategoryWiseProduct> {
                               Toast.show('Warning : আপনার অর্ডারটি সম্পূর্ণ করতে নূন্যতম ২০০ টাকার পণ্য লাগবে.', context);
                             }else{
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context)=>PaymentScreen()
+                                  builder: (context)=>CheckOutPages()
                               ));
                             }
                           },

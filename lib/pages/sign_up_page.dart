@@ -81,7 +81,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 margin: EdgeInsets.only(top: 50,bottom: 20),
                 duration: Duration(milliseconds: 5000),
                 child: Center(
-                  child: Image.asset('images/logo.png',
+                  child: Image.asset('images/Behind app logo.png',
                     width: MediaQuery.of(context).size.width/3,
                     height: MediaQuery.of(context).size.width/3,
                     fit: BoxFit.cover,),

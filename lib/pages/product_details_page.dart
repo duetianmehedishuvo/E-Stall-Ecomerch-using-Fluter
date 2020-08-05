@@ -5,8 +5,7 @@ import 'package:estallecomerch/helpers/products_db_service.dart';
 import 'package:estallecomerch/helpers/provider/products_provider.dart';
 import 'package:estallecomerch/models/choose_products_models.dart';
 import 'package:estallecomerch/models/products_models_user.dart';
-import 'package:estallecomerch/pages/my_order_page.dart';
-import 'package:estallecomerch/pages/payment_screen.dart';
+import 'package:estallecomerch/pages/check_out_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -79,6 +78,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   @override
   Widget build(BuildContext context) {
 
+    Provider.of<ProductsProvider>(context).count;
 
 
     return WillPopScope(
@@ -207,7 +207,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Text('BDT ${widget.products.current_price}',style: TextStyle(
+                            Text('BDT ${widget.products.current_price}',style:const TextStyle(
                               fontSize: 16
                             ),),
                             Text(widget.products.condition=='Add To Cart'?'In Stock':'Out Of Stock',style: TextStyle(
@@ -220,13 +220,13 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Container(
-                                child: Text(widget.products.name,style: TextStyle(
+                                child: Text(widget.products.name,style: const TextStyle(
                                     fontSize: 22,
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold
-                                ),)),
+                                ),overflow: TextOverflow.ellipsis,)),
 
-                            Text(widget.products.last_price==0?'':'BDT ${widget.products.last_price}',style: TextStyle(
+                            Text(widget.products.last_price==0?'':'BDT ${widget.products.last_price}',style: const TextStyle(
                                 fontSize: 16,
                               decoration: TextDecoration.lineThrough
                             ),),
@@ -246,8 +246,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Container(
-                              margin: EdgeInsets.only(left: 5),
-                              child: Text('Quantity',style: TextStyle(
+                              margin:const EdgeInsets.only(left: 5),
+                              child: Text('Quantity',style:const TextStyle(
                                 fontSize: 16,
                                 color: Colors.black,
                                 fontWeight: FontWeight.w500
@@ -258,7 +258,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
                                 Container(
-                                  margin: EdgeInsets.only(left: 4,top: 5,bottom: 5),
+                                  margin:const EdgeInsets.only(left: 4,top: 5,bottom: 5),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(4),
                                       color: Colors.lightBlue
@@ -266,7 +266,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                   height: 30,
                                   width: 30,
                                   child: IconButton(
-                                    icon: Icon(Icons.keyboard_arrow_left,color: Colors.white,),
+                                    icon:const Icon(Icons.keyboard_arrow_left,color: Colors.white,),
                                     onPressed: (){
                                       setState(() {
                                         if(countNumber>0){
@@ -287,7 +287,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                     child: Text('${widget.products.count}')),
                                 Container(
                                   alignment: Alignment.center,
-                                  margin: EdgeInsets.only(right: 4,top: 5,bottom: 5),
+                                  margin:const EdgeInsets.only(right: 4,top: 5,bottom: 5),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(4),
                                       color: Colors.lightBlue
@@ -295,7 +295,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                   height: 30,
                                   width: 30,
                                   child: IconButton(
-                                    icon: Icon(Icons.keyboard_arrow_right,color: Colors.white,),
+                                    icon:const Icon(Icons.keyboard_arrow_right,color: Colors.white,),
                                     onPressed: (){
                                       setState(() {
                                         countNumber++;
@@ -310,7 +310,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         ),
                         Column(
                           children: <Widget>[
-                            Text('Total Price',style: TextStyle(
+                            Text('Total Price',style:const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                             ),),
@@ -326,17 +326,13 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   Container(
                     width: double.infinity,
                       padding: EdgeInsets.all(8),
-                      child: Text("Description: \n\n${widget.products.description}",style: TextStyle(
+                      child: Text("Description: \n\n${widget.products.description}",style:const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w500
                       ),))
                 ],
               )),
               Container(
-                alignment: Alignment.center,
-                width: double.infinity,
-                height: 60,
-                color: Colors.green.withOpacity(.7),
                 child: Consumer<ProductsProvider>(
                   builder: (context,cart,child){
                     return cart.count==0?Container():
@@ -348,7 +344,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Text('Place Order',style: TextStyle(
+                            Text('Place Order',style:const TextStyle(
                               color: Colors.white,
                               fontSize: 18,
                               fontWeight: FontWeight.w500,
@@ -376,7 +372,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                           }
                           else{
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context)=>PaymentScreen()
+                                builder: (context)=>CheckOutPages()
                             )).then((_){
                               setState(() {
 
@@ -389,9 +385,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     );
                   },
                 ),
-
-
-              )
+              ),
             ],
           ),
         ),
@@ -428,7 +422,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
       ProductsDBService.addProductWithUSER(widget.products,email);
 
       CartService.addtocartProduct(chooseProductModels, email).then((_){
-        Toast.show('${chooseProductModels.totalPrice} \$', context);
+        Toast.show('${chooseProductModels.totalPrice} ৳', context);
         print('${chooseProductModels.totalPrice}');
       });
 
@@ -437,6 +431,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
       ProductsDBService.addProductBYCategoryWithUser(widget.products, email);
       ProductsDBService.addProductByAuthorWithUser(widget.products, email);
       Provider.of<ProductsProvider>(context,listen: false).getCount(email);
+      Provider.of<ProductsProvider>(context,listen: false).getTotalprice(email);
 
     });
 
@@ -464,6 +459,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         ProductsDBService.addProductBYCategoryWithUser(widget.products, email);
         ProductsDBService.addProductByAuthorWithUser(widget.products, email);
         Provider.of<ProductsProvider>(context,listen: false).getCount(email);
+        Provider.of<ProductsProvider>(context,listen: false).getTotalprice(email);
       }else{
 
         ProductsDBService.addProductWithUSER(widget.products,email);
@@ -472,9 +468,10 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         ProductsDBService.addProductByAuthorWithUser(widget.products, email);
 
         CartService.addtocartProduct(chooseProductModels, email).then((_){
-          Toast.show('${chooseProductModels.totalPrice} \$', context);
+          Toast.show('${chooseProductModels.totalPrice} ৳', context);
         });
         Provider.of<ProductsProvider>(context,listen: false).getCount(email);
+        Provider.of<ProductsProvider>(context,listen: false).getTotalprice(email);
       }
 
     });

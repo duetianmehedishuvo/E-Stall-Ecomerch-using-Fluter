@@ -77,46 +77,64 @@ class _ProductsWidgetsState extends State<ProductsWidgets> {
       child: Card(
         child: Column(
           children: <Widget>[
-            Container(
-                color: Colors.blue.withOpacity(.1),
-                child: Image.network(widget.products.imageUrl,width: double.infinity,height: 150,fit: BoxFit.cover,)),
+            Stack(
+              children: <Widget>[
+                Container(
+                    child:  Image.asset('images/no-img.jpg',
+                      width:   double.infinity,
+                      height: 150,
+                      fit: BoxFit.cover,)),
+
+                Container(
+                    child:  Image.network(widget.products.imageUrl==null?'https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg':widget.products.imageUrl,
+                      width:   double.infinity,
+                      height: 150,
+                      fit: BoxFit.cover,)),
+
+
+
+              ],
+            ),
+
             Padding(
               padding: const EdgeInsets.only(left: 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text('${widget.products.name}',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-                  IconButton(
-                    icon: Icon(widget.products.favouriteCheck==false?Icons.favorite_border:Icons.favorite,color: Colors.red,),
-                    onPressed: (){
-                      setState(() {
-                        widget.products.favouriteCheck=!widget.products.favouriteCheck;
+                  Expanded(flex:3,child: Text('${widget.products.name}',style: const TextStyle(fontWeight: FontWeight.bold),overflow: TextOverflow.ellipsis,)),
+                  Expanded(
+                    child: IconButton(
+                      icon: Icon(widget.products.favouriteCheck==false?Icons.favorite_border:Icons.favorite,color: Colors.red,),
+                      onPressed: (){
+                        setState(() {
+                          widget.products.favouriteCheck=!widget.products.favouriteCheck;
 
-                        if(widget.products.favouriteCheck==true){
-                          widget.products.favouriteCheck=='statusTrue';
-                          ProductsDBService.addProductWithUSER(widget.products,email).then((value){
-                            setState(() {
-                              print(('isFavourite True'));
+                          if(widget.products.favouriteCheck==true){
+                            widget.products.favouriteCheck=='statusTrue';
+                            ProductsDBService.addProductWithUSER(widget.products,email).then((value){
+                              setState(() {
+                                print(('isFavourite True'));
+                              });
                             });
-                          });
-                          ProductsDBService.addProductBYCategoryWithUser(widget.products, email);
-                          ProductsDBService.addProductByAuthorWithUser(widget.products, email);
-                          ProductsDBService.addFavouriteProductsWithUser(widget.products, email);
+                            ProductsDBService.addProductBYCategoryWithUser(widget.products, email);
+                            ProductsDBService.addProductByAuthorWithUser(widget.products, email);
+                            ProductsDBService.addFavouriteProductsWithUser(widget.products, email);
 
-                        }else{
-                          widget.products.favouriteCheck=='statusfalse';
-                          ProductsDBService.addProductWithUSER(widget.products,email).then((value){
-                            setState(() {
-                              print(('isFavourite False'));
+                          }else{
+                            widget.products.favouriteCheck=='statusfalse';
+                            ProductsDBService.addProductWithUSER(widget.products,email).then((value){
+                              setState(() {
+                                print(('isFavourite False'));
+                              });
                             });
-                          });
-                          ProductsDBService.addProductBYCategoryWithUser(widget.products, email);
-                          ProductsDBService.addProductByAuthorWithUser(widget.products, email);
-                          ProductsDBService.removeAllFavouriteWithUser(widget.products,email);
-                        }
+                            ProductsDBService.addProductBYCategoryWithUser(widget.products, email);
+                            ProductsDBService.addProductByAuthorWithUser(widget.products, email);
+                            ProductsDBService.removeAllFavouriteWithUser(widget.products,email);
+                          }
 
-                      });
-                    },
+                        });
+                      },
+                    ),
                   )
                 ],
               ),
@@ -125,11 +143,15 @@ class _ProductsWidgetsState extends State<ProductsWidgets> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Container(
-                    padding: EdgeInsets.only(left: 8),
-                    child: Text('BDT ${widget.products.current_price}',style: TextStyle(fontSize: 15,color: Colors.green),)),
+                    padding: const EdgeInsets.only(left: 8),
+                    child: Text('BDT ${widget.products.current_price}',
+                      style:const TextStyle(fontSize: 15,color: Colors.green),)),
                 Container(
-                    padding: EdgeInsets.only(right: 8),
-                    child: Text('',style: TextStyle(fontSize: 15,color: Colors.green),)),
+                    padding: const EdgeInsets.only(right: 8),
+                    child: Text(widget.products.last_price==0?'':'BDT ${widget.products.last_price}',style: const TextStyle(
+                        fontSize: 16,
+                        decoration: TextDecoration.lineThrough
+                    ),),),
               ],
             ),
             Row(
@@ -141,7 +163,7 @@ class _ProductsWidgetsState extends State<ProductsWidgets> {
                         children: <Widget>[
                           Expanded(
                             child: Container(
-                              margin: EdgeInsets.only(left: 4,top: 5,bottom: 5),
+                              margin: const EdgeInsets.only(left: 4,top: 5,bottom: 5),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(4),
                                 color: Colors.lightBlue
@@ -169,14 +191,14 @@ class _ProductsWidgetsState extends State<ProductsWidgets> {
                               child: Text('${widget.products.count}'))),
                           Expanded(
                             child: Container(
-                              margin: EdgeInsets.only(right: 4,top: 5,bottom: 5),
+                              margin:const  EdgeInsets.only(right: 4,top: 5,bottom: 5),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(4),
                                   color: Colors.lightBlue
                               ),
                               height: 40,
                               child: IconButton(
-                                icon: Icon(Icons.keyboard_arrow_right,color: Colors.white,),
+                                icon:  Icon(Icons.keyboard_arrow_right,color: Colors.white,),
                                 onPressed: (){
                                   setState(() {
                                     countNumber++;
@@ -191,7 +213,7 @@ class _ProductsWidgetsState extends State<ProductsWidgets> {
                     )),
                 Expanded(child: Container(
                     alignment: Alignment.center,
-                    child: FittedBox(child: Text(widget.products.quantity,style: TextStyle(fontSize: 15),))))
+                    child: FittedBox(child: Text(widget.products.quantity,style: const  TextStyle(fontSize: 15),))))
               ],
             ),
             Container(
@@ -199,7 +221,7 @@ class _ProductsWidgetsState extends State<ProductsWidgets> {
               padding: EdgeInsets.all(8),
               alignment: Alignment.center,
               color: widget.products.condition=='Add To Cart'?Colors.blue:Colors.red,
-              child: Text(widget.products.price==null?'0':"৳ ${widget.products.price}",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,letterSpacing: .7),),
+              child: Text(widget.products.price==null?'0':"৳ ${widget.products.price}",style: const TextStyle(color: Colors.white,fontWeight: FontWeight.bold,letterSpacing: .7),),
             ),
           ],
         ),
@@ -241,7 +263,7 @@ class _ProductsWidgetsState extends State<ProductsWidgets> {
       ProductsDBService.addProductWithUSER(widget.products,email);
 
       CartService.addtocartProduct(chooseProductModels, email).then((_){
-        Toast.show('${chooseProductModels.totalPrice} \$', context);
+        Toast.show('${chooseProductModels.totalPrice} ৳', context);
         print('${chooseProductModels.totalPrice}');
       });
 
@@ -289,7 +311,7 @@ class _ProductsWidgetsState extends State<ProductsWidgets> {
         Provider.of<ProductsProvider>(context,listen: false).getTotalprice(email);
 
         CartService.addtocartProduct(chooseProductModels, email).then((_){
-          Toast.show('${chooseProductModels.totalPrice} \$', context);
+          Toast.show('${chooseProductModels.totalPrice} ৳', context);
         });
       }
 

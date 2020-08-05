@@ -29,7 +29,7 @@ class _AboutDeveloperPageState extends State<AboutDeveloperPage> {
         seperatorColor: Colors.grey,
         iconColor: Colors.black,
         textColor: Colors.black,
-        playstoreID: "Bd+Mehedi+Shuvo",
+        playstoreID: "duetinmehedishuvo",
         github: "duetinmehedishuvo",
         facebook: "m.mehedihasanshuvo.in", //e.g jideguru
         youtube: "channel/UCSvBjGRXbx_yWKuAExIA8VQ?view_as=subscriber",

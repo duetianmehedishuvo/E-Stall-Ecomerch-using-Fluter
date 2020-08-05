@@ -3,7 +3,7 @@ import 'package:estallecomerch/helpers/products_db_service.dart';
 import 'package:estallecomerch/helpers/provider/products_provider.dart';
 import 'package:estallecomerch/models/products_models_user.dart';
 import 'package:estallecomerch/pages/my_order_page.dart';
-import 'package:estallecomerch/pages/payment_screen.dart';
+import 'package:estallecomerch/pages/check_out_screen.dart';
 import 'package:estallecomerch/widgets/products_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +20,6 @@ class ProductScreen extends StatefulWidget {
 class _ProductScreenState extends State<ProductScreen> {
 
   String useremail;
-  int count;
 
   @override
   void initState() {
@@ -39,7 +38,6 @@ class _ProductScreenState extends State<ProductScreen> {
   Widget build(BuildContext context) {
 
     Provider.of<ProductsProvider>(context).count;
-    count=Provider.of<ProductsProvider>(context).count;
 
     return Center(
       child: FutureBuilder(
@@ -96,7 +94,7 @@ class _ProductScreenState extends State<ProductScreen> {
                           }
                           else{
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context)=>PaymentScreen()
+                                builder: (context)=>CheckOutPages()
                             )).then((_){
                               setState(() {
 

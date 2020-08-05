@@ -5,7 +5,7 @@ import 'package:estallecomerch/models/products_models.dart';
 import 'package:estallecomerch/models/products_models_user.dart';
 import 'package:estallecomerch/pages/homeScreen.dart';
 import 'package:estallecomerch/pages/my_order_page.dart';
-import 'package:estallecomerch/pages/payment_screen.dart';
+import 'package:estallecomerch/pages/check_out_screen.dart';
 import 'package:estallecomerch/widgets/products_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -107,7 +107,7 @@ class _CategoryWiseProductListState extends State<CategoryWiseProductList> {
                             }
                             else{
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context)=>PaymentScreen()
+                                  builder: (context)=>CheckOutPages()
                               )).then((_){
                                 setState(() {
 

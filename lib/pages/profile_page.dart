@@ -185,6 +185,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 onSaved: (value){
                                   profile.address=value;
                                 },
+                                maxLines: null,
                               ),
                             ),
                             SizedBox(height: 20,),

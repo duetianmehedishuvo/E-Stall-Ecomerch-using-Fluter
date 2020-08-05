@@ -72,18 +72,35 @@ class _ChooseProductWidgetState extends State<ChooseProductWidget> {
       child: Card(
         child: Column(
           children: <Widget>[
-            Container(
-                color: Colors.blue.withOpacity(.1),
-                child: Image.network(widget.chooseProductModels.imageUrl,width: double.infinity,height: 150,fit: BoxFit.cover,)),
+            Stack(
+              children: <Widget>[
+                Container(
+                    child:  Image.asset('images/no-img.jpg',
+                      width:   double.infinity,
+                      height: 150,
+                      fit: BoxFit.cover,)),
+
+                Container(
+                    child:  Image.network(widget.chooseProductModels.imageUrl==null?'https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg':widget.chooseProductModels.imageUrl,
+                      width:   double.infinity,
+                      height: 150,
+                      fit: BoxFit.cover,)),
+
+
+
+              ],
+            ),
             Padding(
               padding: const EdgeInsets.only(left: 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text('${widget.chooseProductModels.name}',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-                  IconButton(
-                    icon: Icon(Icons.favorite_border,color: Colors.grey,),
-                    onPressed: (){},
+                  Expanded(flex:3,child: Text('${widget.chooseProductModels.name}',style:const TextStyle(fontSize: 16,fontWeight: FontWeight.bold),overflow: TextOverflow.ellipsis,)),
+                  Expanded(
+                    child: IconButton(
+                      icon: const Icon(Icons.favorite_border,color: Colors.grey,),
+                      onPressed: (){},
+                    ),
                   )
                 ],
               ),
@@ -93,10 +110,13 @@ class _ChooseProductWidgetState extends State<ChooseProductWidget> {
               children: <Widget>[
                 Container(
                     padding: EdgeInsets.only(left: 8),
-                    child: Text('BDT ${widget.chooseProductModels.current_price}',style: TextStyle(fontSize: 15,color: Colors.green),)),
+                    child: Text('BDT ${widget.chooseProductModels.current_price}',style:const TextStyle(fontSize: 15,color: Colors.green),)),
                 Container(
                     padding: EdgeInsets.only(right: 8),
-                    child: Text('',style: TextStyle(fontSize: 15,color: Colors.green),)),
+                    child: Text(widget.chooseProductModels.last_price==0?'':'BDT ${widget.chooseProductModels.last_price}',style:const TextStyle(
+                        fontSize: 16,
+                        decoration: TextDecoration.lineThrough
+                    ),),),
               ],
             ),
             Row(
@@ -108,14 +128,14 @@ class _ChooseProductWidgetState extends State<ChooseProductWidget> {
                         children: <Widget>[
                           Expanded(
                             child: Container(
-                              margin: EdgeInsets.only(left: 4,top: 5,bottom: 5),
+                              margin:const EdgeInsets.only(left: 4,top: 5,bottom: 5),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(4),
                                   color: Colors.lightBlue
                               ),
                               height: 40,
                               child: IconButton(
-                                icon: Icon(Icons.keyboard_arrow_left,color: Colors.white,),
+                                icon: const Icon(Icons.keyboard_arrow_left,color: Colors.white,),
                                 onPressed: (){
                                   setState(() {
                                     if(countNumber>0){
@@ -136,14 +156,14 @@ class _ChooseProductWidgetState extends State<ChooseProductWidget> {
                               child: Text('${widget.chooseProductModels.count}'))),
                           Expanded(
                             child: Container(
-                              margin: EdgeInsets.only(right: 4,top: 5,bottom: 5),
+                              margin:const EdgeInsets.only(right: 4,top: 5,bottom: 5),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(4),
                                   color: Colors.lightBlue
                               ),
                               height: 40,
                               child: IconButton(
-                                icon: Icon(Icons.keyboard_arrow_right,color: Colors.white,),
+                                icon:const Icon(Icons.keyboard_arrow_right,color: Colors.white,),
                                 onPressed: (){
                                   setState(() {
                                     countNumber++;
@@ -158,12 +178,12 @@ class _ChooseProductWidgetState extends State<ChooseProductWidget> {
                     )),
                 Expanded(child: Container(
                     alignment: Alignment.center,
-                    child: FittedBox(child: Text(widget.chooseProductModels.quantity,style: TextStyle(fontSize: 15),))))
+                    child: FittedBox(child: Text(widget.chooseProductModels.quantity,style:const TextStyle(fontSize: 15),))))
               ],
             ),
             Container(
               width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.all(8),
+              padding:const EdgeInsets.all(8),
               alignment: Alignment.center,
               color: widget.chooseProductModels.condition=='Add To Cart'?Colors.blue:Colors.red,
               child: Text("৳ ${widget.chooseProductModels.totalPrice}",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,letterSpacing: .7),),
@@ -201,7 +221,7 @@ class _ChooseProductWidgetState extends State<ChooseProductWidget> {
     widget.chooseProductModels.totalPrice=price;
 
     CartService.addtocartProduct(widget.chooseProductModels, email).then((_){
-      Toast.show('${widget.chooseProductModels.totalPrice} \$', context);
+      Toast.show('${widget.chooseProductModels.totalPrice} ৳', context);
       print('${widget.chooseProductModels.totalPrice}');
     });
 
@@ -221,7 +241,7 @@ class _ChooseProductWidgetState extends State<ChooseProductWidget> {
       CartService.removetocartProduct(widget.chooseProductModels, email);
     }else{
       CartService.addtocartProduct(widget.chooseProductModels, email).then((_){
-        Toast.show('${widget.chooseProductModels.totalPrice} \$', context);
+        Toast.show('${widget.chooseProductModels.totalPrice} ৳', context);
       });
     }
 

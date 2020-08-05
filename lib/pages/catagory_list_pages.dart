@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 String cosmetics='cosmetics';
 String fashion='fashion';
-String mask_sanitiser='mask_sanitiser';
+String Fruits='fruits';
 String gas_cylinder='gas_cylinder';
 String drink_desert='drink_desert';
 String groceries='groceries';
@@ -13,7 +13,7 @@ String furnitures='furniture';
 
 String dcosmetics='Cosmetics';
 String dfashion='Fashion';
-String dmask_sanitiser='Mask & Sanitizer';
+String dFruits='Fruits';
 String dgas_cylinder='Gas Cylinder';
 String ddrink_desert='Drink & Dessert';
 String dgroceries='Groceries';
@@ -176,7 +176,7 @@ class _CategoryListPagesState extends State<CategoryListPages> {
                 child: GestureDetector(
                   onTap: (){
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context)=>CategoryWiseProductList(categoryName: mask_sanitiser,isListPage: true,displayName: dmask_sanitiser,),
+                      builder: (context)=>CategoryWiseProductList(categoryName: Fruits,isListPage: true,displayName: dFruits,),
                     ));
                   },
                   child: Container(
@@ -185,7 +185,7 @@ class _CategoryListPagesState extends State<CategoryListPages> {
                     child: Stack(
                       overflow: Overflow.visible,
                       children: <Widget>[
-                        Image.asset('images/mask R.png',
+                        Image.asset('images/Fruites.png',
                           width: double.infinity,
                           height: double.infinity,
                           fit: BoxFit.fill,
@@ -205,7 +205,7 @@ class _CategoryListPagesState extends State<CategoryListPages> {
                                 color: Colors.black.withOpacity(.5),
                                 borderRadius: BorderRadius.circular(10)
                             ),
-                            child: Text('Mask & Sanitiser',style: TextStyle(
+                            child: Text('Fruits',style: TextStyle(
                               fontSize: 20,
                               color: Colors.white,
                               fontWeight: FontWeight.w500,

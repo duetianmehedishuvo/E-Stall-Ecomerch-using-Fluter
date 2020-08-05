@@ -118,9 +118,9 @@ class _ReportPagesState extends State<ReportPages> {
               Provider.of<ProductsProvider>(context,listen: false).getCount(widget.paymentModels.profile.email);
               Provider.of<ProductsProvider>(context,listen: false).getTotalprice(widget.paymentModels.profile.email);
               Toast.show('Thanks For Parching Products', context);
-              Navigator.of(context).pushReplacementNamed(HomeScreen.route);
             });
           });
+          Navigator.of(context).pushReplacementNamed(HomeScreen.route);
         });
       });
     });
@@ -340,7 +340,7 @@ class _ReportPagesState extends State<ReportPages> {
               width: double.infinity,
               color: Colors.blue.withOpacity(.1),
               padding: EdgeInsets.only(right: 16),
-              child: Text('Delivery Charge: 30 ৳',style: TextStyle(
+              child: Text('Delivery Charge: 20 ৳',style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w500
               ),),
@@ -365,7 +365,7 @@ class _ReportPagesState extends State<ReportPages> {
                       ),
                       Consumer<ProductsProvider>(
                         builder: (context,cart,child){
-                          return FittedBox(child: Text('T-Price: ${cart.totalPrice+30} ৳',style: TextStyle(
+                          return FittedBox(child: Text('T-Price: ${cart.totalPrice+20} ৳',style: TextStyle(
                               fontWeight: FontWeight.bold,
                               letterSpacing: .8,
                               color: Colors.black.withOpacity(.8)

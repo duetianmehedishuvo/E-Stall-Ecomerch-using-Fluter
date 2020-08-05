@@ -15,12 +15,13 @@ import 'package:estallecomerch/pages/catagory_wise_product.dart';
 import 'package:estallecomerch/pages/contact_pages.dart';
 import 'package:estallecomerch/pages/login_page.dart';
 import 'package:estallecomerch/pages/my_order_page.dart';
-import 'package:estallecomerch/pages/payment_screen.dart';
+import 'package:estallecomerch/pages/check_out_screen.dart';
 import 'package:estallecomerch/pages/product_screen.dart';
 import 'package:estallecomerch/pages/profile_page.dart';
 import 'package:estallecomerch/pages/shop_page.dart';
 import 'package:estallecomerch/pages/wish_list_page.dart';
 import 'package:estallecomerch/widgets/products_widgets.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
@@ -46,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<bool> _onBackPressed() async {
     // Your back press code here...
     Toast.show('Back Pressed', context);
-    showAlertDialog(context, 'Are you sure  want to Exit Now And Save Your Products in Cart ?', "E-stall" , "Exit", "Cancel",'Save & Exit');
+    showAlertDialog(context, 'Are you sure  want to Exit Now And Save Your Products in Cart ?', "Shokher Hat" , "Exit", "Cancel",'Save & Exit');
   }
 
 
@@ -54,6 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
 
     authenticationService=AuthenticationService();
     productsUserId=ProductsUserId();
@@ -69,84 +71,94 @@ class _HomeScreenState extends State<HomeScreen> {
           });
         });
 
-        UserUtils.getUserSessionUsingPref().then((value){
 
-          if(value==false){
+        AuthenticationService.getUserPhoneNumberByPreference().then((email){
+          print(email);
 
-            print('False Form Home');
+          setState(() {
 
+            UserUtils.getUserSessionUsingPref().then((value){
 
+              if(value==false){
 
-            ProductsDBService.getAllProducts().then((listOfProducts){
-              listOfProducts.forEach((products) {
-
-                print('Delete  Method Call');
-
-                productsUserId.name=products.name;
-                productsUserId.nameKey=products.nameKey;
-                productsUserId.current_price=products.current_price;
-                productsUserId.last_price=products.last_price;
-                productsUserId.authorName=products.authorName;
-                productsUserId.imageUrl=products.imageUrl;
-                productsUserId.imageUrl2=products.imageUrl2;
-                productsUserId.imageUrl3=products.imageUrl3;
-                productsUserId.category=products.category;
-                productsUserId.description=products.description;
-                productsUserId.condition=products.condition;
-                productsUserId.quantity=products.quantity;
-
-                print(value.toString());
-
-                productsUserId.count=0;
-                productsUserId.favouriteCheck=false;
-
-                CartService.addtocartProductDelete(products.nameKey, email);
-                ProductsDBService.addProductWithUSER(productsUserId,email);
-                ProductsDBService.addProductBYCategoryWithUser(productsUserId, email);
-                ProductsDBService.addProductByAuthorWithUser(productsUserId, email);
-
-              });
-            });
+                print('False Form Home');
 
 
-          }
 
-          if(value==true){
-            ProductsDBService.getAllProducts().then((listOfProducts){
-              listOfProducts.forEach((products) {
+                ProductsDBService.getAllProducts().then((listOfProducts){
+                  listOfProducts.forEach((products) {
 
-                productsUserId.name=products.name;
-                productsUserId.nameKey=products.nameKey;
-                productsUserId.current_price=products.current_price;
-                productsUserId.last_price=products.last_price;
-                productsUserId.authorName=products.authorName;
-                productsUserId.imageUrl=products.imageUrl;
-                productsUserId.imageUrl2=products.imageUrl2;
-                productsUserId.imageUrl3=products.imageUrl3;
-                productsUserId.category=products.category;
-                productsUserId.description=products.description;
-                productsUserId.condition=products.condition;
-                productsUserId.quantity=products.quantity;
+                    print('Delete  Method Call');
 
+                    productsUserId.name=products.name;
+                    productsUserId.nameKey=products.nameKey;
+                    productsUserId.current_price=products.current_price;
+                    productsUserId.last_price=products.last_price;
+                    productsUserId.authorName=products.authorName;
+                    productsUserId.imageUrl=products.imageUrl;
+                    productsUserId.imageUrl2=products.imageUrl2;
+                    productsUserId.imageUrl3=products.imageUrl3;
+                    productsUserId.category=products.category;
+                    productsUserId.description=products.description;
+                    productsUserId.condition=products.condition;
+                    productsUserId.quantity=products.quantity;
 
-                ProductsDBService.getAllProductsWithUser(email).then((value1){
-                  value1.forEach((element) {
-                    print('True Method Declare');
-                    element.count==null?productsUserId.count=0:productsUserId.count=element.count;
-                    element.price==null?productsUserId.price=0:productsUserId.price=element.price;
+                    print(value.toString());
 
+                    productsUserId.count=0;
+                    productsUserId.favouriteCheck=false;
+
+                    CartService.addtocartProductDelete(products.nameKey, email);
                     ProductsDBService.addProductWithUSER(productsUserId,email);
                     ProductsDBService.addProductBYCategoryWithUser(productsUserId, email);
                     ProductsDBService.addProductByAuthorWithUser(productsUserId, email);
 
                   });
                 });
-              });
+
+
+              }
+
+              if(value==true){
+                ProductsDBService.getAllProducts().then((listOfProducts){
+                  listOfProducts.forEach((products) {
+
+                    productsUserId.name=products.name;
+                    productsUserId.nameKey=products.nameKey;
+                    productsUserId.current_price=products.current_price;
+                    productsUserId.last_price=products.last_price;
+                    productsUserId.authorName=products.authorName;
+                    productsUserId.imageUrl=products.imageUrl;
+                    productsUserId.imageUrl2=products.imageUrl2;
+                    productsUserId.imageUrl3=products.imageUrl3;
+                    productsUserId.category=products.category;
+                    productsUserId.description=products.description;
+                    productsUserId.condition=products.condition;
+                    productsUserId.quantity=products.quantity;
+
+
+                    ProductsDBService.getAllProductsWithUser(email).then((value1){
+                      value1.forEach((element) {
+                        print('True Method Declare');
+                        element.count==null?productsUserId.count=0:productsUserId.count=element.count;
+                        element.price==null?productsUserId.price=0:productsUserId.price=element.price;
+
+                        ProductsDBService.addProductWithUSER(productsUserId,email);
+                        ProductsDBService.addProductBYCategoryWithUser(productsUserId, email);
+                        ProductsDBService.addProductByAuthorWithUser(productsUserId, email);
+
+                      });
+                    });
+                  });
+                });
+              }
+
+
             });
-          }
 
-
+          });
         });
+
 
       });
     });
@@ -179,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: Icon(Icons.menu),
                   onPressed: drawerController.toggle,
                 ),
-                title: Text('Estall',style: TextStyle(fontSize: 18.0),),
+                title: Text('Shokher Hat',style: TextStyle(fontSize: 18.0),),
                 actions: <Widget>[
 
                   IconButton(
@@ -248,7 +260,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Text('All',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
                           ),
                           Tab(
-                            child: Text('Grocery',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+                            child: Text('Groceries',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
                           ),
                           Tab(
                             child: Text('Drink & Dessert',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
@@ -257,7 +269,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Text('Gas Cylinder',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
                           ),
                           Tab(
-                            child: Text('Mask & Sanitiser',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+                            child: Text('Fruits',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
                           ),
                           Tab(
                             child: Text('Fashion',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
@@ -266,7 +278,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Text('Cosmetics',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
                           ),
                           Tab(
-                            child: Text('Electronic',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+                            child: Text('Electronics',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
                           ),
                           Tab(
                             child: Text('Furniture',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
@@ -280,7 +292,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   CategoryWiseProduct(categoryName:'groceries',isListPage: false,),
                   CategoryWiseProduct(categoryName:'drink_desert',isListPage: false,),
                   CategoryWiseProduct(categoryName:'gas_cylinder',isListPage: false,),
-                  CategoryWiseProduct(categoryName:'mask_sanitiser',isListPage: false,),
+                  CategoryWiseProduct(categoryName:'fruits',isListPage: false,),
                   CategoryWiseProduct(categoryName:'fashion',isListPage: false,),
                   CategoryWiseProduct(categoryName:'cosmetics',isListPage: false,),
                   CategoryWiseProduct(categoryName:'electronic',isListPage: false,),
@@ -297,7 +309,7 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: EdgeInsets.all(0),
       children: <Widget>[
         Container(
-          padding: EdgeInsets.only(top: 50, bottom: 20),
+          padding: EdgeInsets.only(top: 50, bottom: 20,left: 10,right: 10),
           color: Colors.blue,
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -425,7 +437,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   });
                 });
               },
-              leading: Icon(Icons.reorder,color: Colors.white,), title: Text("My Card")),
+              leading: Icon(Icons.reorder,color: Colors.white,), title: Text("My Cart")),
         ),
         Container(
           height: 1,
@@ -595,7 +607,10 @@ class ProductSearchDelegate extends SearchDelegate{
             List<ProductsUserId> suggestions=query==null?
             snapshot.data:
             snapshot.data.where((products)=>
-            (products.nameKey.toLowerCase().startsWith(query.toLowerCase()))||(products.name.toLowerCase().startsWith(query.toLowerCase()))||(products.authorName.toLowerCase().startsWith(query.toLowerCase()))).toList();
+            (products.nameKey.toLowerCase().contains(query))
+                //||(products.name.toLowerCase().startsWith(query.toLowerCase()))
+                ||(products.name.toLowerCase().contains(query))
+                ||(products.authorName.toLowerCase().contains(query))).toList();
 
             return StaggeredGridView.countBuilder(crossAxisCount: 4,
                 itemCount: suggestions.length,

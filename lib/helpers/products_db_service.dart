@@ -11,6 +11,7 @@ class ProductsDBService{
 
   static final Firestore db=Firestore.instance;
 
+
   //////////////////////Bello 3 Method for Product Insert/////////////////////////
 
   // Add a Single Products Items
@@ -54,7 +55,6 @@ class ProductsDBService{
       return snapshot.documents.map((products)=>ProductsUserId.fromMap(products.data)).toList();
     }
   }
-
 
 
 

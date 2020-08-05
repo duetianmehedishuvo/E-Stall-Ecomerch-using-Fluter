@@ -18,11 +18,7 @@ class _AboutScreenState extends State<AboutScreen> {
   String aboutUstext='';
   String privacy_policy='';
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +31,9 @@ class _AboutScreenState extends State<AboutScreen> {
         children: <Widget>[
           Container(
             width: double.infinity,
-            height: 150,
+            color: Colors.white,
             alignment: Alignment.center,
-            child: Image.asset('images/logo.png',width: 150,height: 150,fit: BoxFit.fill,),
+            child: Image.asset('images/Behind app logo.png',width: 150,height: 150,fit: BoxFit.fill,),
           ),
 
           Container(
@@ -89,7 +85,7 @@ class _AboutScreenState extends State<AboutScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text('Privacy Policy',style: TextStyle(
+                    Text('Delivery & Refund Policy',style: TextStyle(
                         decoration: TextDecoration.underline,
                         fontSize: 18,
                         fontWeight: FontWeight.bold
