@@ -1,16 +1,3 @@
-# estallecomerch
+# Shokher Hat 
 
-A new Flutter application.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+From this app people can easily order and buy grocery products such as rice, pulse, flour, potato, onion etc. People also buy fashion & cosmetics products. The people of Kalkini can order products from this app at any time if they want. We will immediately deliver the ordered product with home delivery. This app is a good choice for online shopping. Our main goal is to provide services. Shokher Hat is a new name in the online marketplace but it can be said that Shokher Hat will soon be a popular name in the online marketplace. 
